@@ -3,11 +3,15 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './styles/base.less'
-import { Tab, Tabs , Field , Button} from 'vant';
+import { Tab, Tabs , Field , Button , List} from 'vant';
 
 Vue.config.productionTip = false
 
-Vue.use(Tab).use(Tabs).use(Field).use(Button);
+Vue.use(Tab)
+    .use(Tabs)
+    .use(Field)
+    .use(Button)
+    .use(List);
 
 new Vue({
   router,
