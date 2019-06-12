@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="indexmain">
     <router-view></router-view>
     <tabBar :tabs='tabs'/>
   </div>
@@ -23,3 +23,9 @@ export default {
 
 }
 </script>
+<style lang="less" scoped>
+  .indexmain{
+    height: 100%;
+  }
+</style>
+
