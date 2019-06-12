@@ -3,19 +3,18 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './styles/base.less'
-import { Tab, Tabs , Field , Button , List} from 'vant';
-
-
-import { DropdownMenu, DropdownItem } from 'vant'
-Vue.use(DropdownMenu).use(DropdownItem)
+import { Tab, Tabs, Field, Button, List, TreeSelect, DropdownMenu, DropdownItem } from 'vant'
 
 Vue.config.productionTip = false
 
 Vue.use(Tab)
-    .use(Tabs)
-    .use(Field)
-    .use(Button)
-    .use(List);
+  .use(Tabs)
+  .use(Field)
+  .use(Button)
+  .use(List)
+  .use(TreeSelect)
+  .use(DropdownMenu)
+  .use(DropdownItem)
 
 new Vue({
   router,

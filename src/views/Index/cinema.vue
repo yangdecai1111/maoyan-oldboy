@@ -21,13 +21,14 @@
       <van-dropdown-item v-model="value2" :options="option2" />
       <van-dropdown-item v-model="value3" :options="option3" />
     </van-dropdown-menu>
-    <cinemaList :cinemaList="cityList"/>
+      <cinemaList :cinemaList="cityList"/>
   </div>
 </template>
 <script>
 import { mapActions, mapState } from 'vuex'
 import cinemaList from '@/components/cinema.vue'
 export default {
+  name: 'cinema',
   data () {
     return {
       value1: 0,
@@ -45,20 +46,32 @@ export default {
     }
   },
   computed: {
+    ...mapState('cinema', ['cityList', 'loading'])
+
     ...mapState('cinema',['cityList','cityName']),
-    
   },
   methods: {
     ...mapActions('cinema', ['getCityList']),
     onScroll () {
-      console.log('滚动事件')
+      let item = document.querySelector('.listbox')
+      let scrollTop = item.scrollTop
+      let scrollHeight = item.scrollHeight
+      let clientHeight = item.clientHeight
+      if ((scrollHeight - clientHeight) - scrollTop < 50) {
+        if (!this.loading) {
+          this.getCityList(true)
+        }
+      }
     }
+
   },
   created () {
     this.getCityList()
-    window.addEventListener('scroll', this.onScroll)
   },
-  components:{
+  mounted () {
+    document.querySelector('.listbox').addEventListener('scroll', this.onScroll)
+  },
+  components: {
     cinemaList
   }
 }

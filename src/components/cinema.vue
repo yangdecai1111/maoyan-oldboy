@@ -1,6 +1,12 @@
 <template>
   <ul class="listbox">
-    <li class="listitem" v-for="list in cinemaList" :key="list.id">
+    <router-link
+      class="listitem"
+      v-for="list in cinemaList"
+      :key="list.id"
+      tag="li"
+      :to="{ name: 'cinemaDetail',
+      params: { id: list.id} }">
       <div class="list-title">
         <span class="list-nm">{{list.nm}}</span>
         <span class="list-price">{{list.sellPrice}}</span>
@@ -26,7 +32,7 @@
         <span>{{list.promotion.cardPromotionTag}}</span>
       </div>
 
-    </li>
+    </router-link>
   </ul>
 </template>
 <script>
@@ -35,7 +41,7 @@ export default {
     cinemaList: {
       type: Array
     }
-  },
+  }
 }
 </script>
 <style lang="less" scoped>

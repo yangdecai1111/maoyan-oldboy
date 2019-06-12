@@ -1,6 +1,8 @@
 <template>
-  <div class="page-index">
-    <router-view></router-view>
+  <div class="indexmain">
+    <keep-alive include="cinema">
+      <router-view></router-view>
+    </keep-alive>
     <tabBar :tabs='tabs'/>
   </div>
 </template>
@@ -8,6 +10,7 @@
 <script>
 import tabBar from '@/components/tabBar.vue'
 export default {
+  name: 'index',
   data () {
     return {
       tabs: [
@@ -20,7 +23,6 @@ export default {
   components: {
     tabBar
   }
-
 }
 </script>
 <style lang="less">
@@ -30,4 +32,3 @@ export default {
   flex-direction: column;
 }
 </style>
-
