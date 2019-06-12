@@ -8,7 +8,7 @@
 
       <div class="l-title">
         <router-link to="/city">
-          <span>深圳</span>
+          <span>{{cityName}}</span>
           <i class="iconfont icon-xjt"></i>
         </router-link>
       </div>
@@ -47,6 +47,8 @@ export default {
   },
   computed: {
     ...mapState('cinema', ['cityList', 'loading'])
+
+    ...mapState('cinema',['cityList','cityName']),
   },
   methods: {
     ...mapActions('cinema', ['getCityList']),

@@ -5,8 +5,8 @@
     </keep-alive>
     <tabBar :tabs='tabs'/>
   </div>
-
 </template>
+
 <script>
 import tabBar from '@/components/tabBar.vue'
 export default {
@@ -25,8 +25,10 @@ export default {
   }
 }
 </script>
-<style lang="less" scoped>
-  .indexmain{
-    height: 100%;
-  }
+<style lang="less">
+.page-index {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 </style>

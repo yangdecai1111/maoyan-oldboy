@@ -1,9 +1,10 @@
 <template>
-  <div class="city">
+  <div class="city" id="scrollBody">
     <!-- 右边快速查找功能 -->
     <div class="quick-find">
       <ul>
-        <li v-for="(item,i) in letters"
+        <li @click="seek($event)">定位最近热门</li>
+        <li v-for="(item,i) in provinceList"
             :key="i"
             >
             {{item}}
@@ -15,24 +16,24 @@
     <!-- 最近访问城市功能 -->
     <h1>最近访问城市</h1>
     <div class="latest-city">
-      <van-button type="default" size="small" class="latest-cityname">北京</van-button>
-      <van-button type="default" size="small" class="latest-cityname">深圳</van-button>
-      <van-button type="default" size="small" class="latest-cityname">上海</van-button>
+      <van-button type="default" size="small" class="latest-cityname" @click="selected($event)">{{latestCity[0]}}</van-button>
+      <van-button type="default" size="small" class="latest-cityname" @click="selected($event)">{{latestCity[1]}}</van-button>
+      <van-button type="default" size="small" class="latest-cityname" @click="selected($event)">{{latestCity[2]}}</van-button>
     </div>
     <!-- 热门城市功能 -->
     <h1>热门城市</h1>
     <div class="hot-city">
-      <van-button type="default" size="small" class="hot-cityname">上海</van-button>
-      <van-button type="default" size="small" class="hot-cityname">北京</van-button>
-      <van-button type="default" size="small" class="hot-cityname">广州</van-button>
-      <van-button type="default" size="small" class="hot-cityname">深圳</van-button>
-      <van-button type="default" size="small" class="hot-cityname">武汉</van-button>
-      <van-button type="default" size="small" class="hot-cityname">天津</van-button>
-      <van-button type="default" size="small" class="hot-cityname">西安</van-button>
-      <van-button type="default" size="small" class="hot-cityname">南京</van-button>
-      <van-button type="default" size="small" class="hot-cityname">杭州</van-button>
-      <van-button type="default" size="small" class="hot-cityname">成都</van-button>
-      <van-button type="default" size="small" class="hot-cityname">重庆</van-button>
+      <van-button type="default" size="small" class="hot-cityname" @click="selected($event)">上海</van-button>
+      <van-button type="default" size="small" class="hot-cityname" @click="selected($event)">北京</van-button>
+      <van-button type="default" size="small" class="hot-cityname" @click="selected($event)">广州</van-button>
+      <van-button type="default" size="small" class="hot-cityname" @click="selected($event)">深圳</van-button>
+      <van-button type="default" size="small" class="hot-cityname" @click="selected($event)">武汉</van-button>
+      <van-button type="default" size="small" class="hot-cityname" @click="selected($event)">天津</van-button>
+      <van-button type="default" size="small" class="hot-cityname" @click="selected($event)">西安</van-button>
+      <van-button type="default" size="small" class="hot-cityname" @click="selected($event)">南京</van-button>
+      <van-button type="default" size="small" class="hot-cityname" @click="selected($event)">杭州</van-button>
+      <van-button type="default" size="small" class="hot-cityname" @click="selected($event)">成都</van-button>
+      <van-button type="default" size="small" class="hot-cityname" @click="selected($event)">重庆</van-button>
     </div>
     <!-- 城市列表部分 -->
     <div class="city-list">
@@ -41,21 +42,18 @@
                 :key="i"
                 class="red"
                 >
-                {{province.Name}}
-                <!-- <li v-for="(city,j) in province.City"
+                <p id="distance">{{province}}</p>
+                
+                <ul class="pro-inner">
+                    <li
+                        v-for="(city,j) in cityList[i]"
                         :key="j"
+                        @click="selected($event)"
                         class="black"
                       >
-                      {{province.City.Name}}
-                </li> -->
-                <!-- <ul>
-                    <li v-for="(city,j) in province.City"
-                        :key="j"
-                        class="black"
-                      >
-                      {{province.City.Name}}
+                        {{city}}
                     </li>
-                </ul> -->
+                </ul>
             </li>
         </ul>
         
@@ -67,41 +65,65 @@
 
 <script>
 import axios from 'axios'
-
+import { mapActions, mapState } from 'vuex'
 export default {
   data() {
       return {
         provinceList: [],
         cityList:[],
-        letters:['定位最近热门',
-          'A','B','C','D','E','F','G','H','I',
-          'J','K','L','M','N','O','P','Q',
-          'R','S','T','U','V','W','X','Y','Z',
-        ]
+        // latestCity:['北京','上海','广州'],
+        href: '/cinema'
       };
   },
   computed:{
-
+      ...mapState('cinema',['latestCity']),
   },
   methods: {
-    getCity:function(){
+    selected(event){
+      
+      // console.log(this.$store.state.cinema.cityName);
+      // console.log(el.innerText);
+      // 点击城市名选择城市
+      var el = event.currentTarget;
+      this.$store.state.cinema.cityName=el.innerText;
+      // 修改最近使用的城市数据
+      
+      this.$store.state.cinema.latestCity.push(el.innerText);
+      this.$store.state.cinema.latestCity.shift();
 
+      this.$router.go(-1);
+
+      // this.latestCity[0] = el.innerText;
+    },
+    seek(event){
+        var el = event.currentTarget.innerHTML;
+        console.log(el);
+
+        // document.getElementById('scrollBody').scrollTop = 800+'px';
+        // for(var i=0;i<provinceList.length;i++){
+        //     if()
+        // }
+        // var dis = document.getElementById('distance');
+        console.log(document.getElementById('scrollBody').scrollTop);
     }
   },
 
   created(){
-    axios.get('http://localhost:8081/api/LocList.json')
+    axios.get('http://localhost:8080/api/LocList.json')
           .then(response=>{
-            console.log(response.data.CountryRegion.State);// Array数组,共33个省份
+            // console.log(response.data.CountryRegion.State);// Array数组,共33个省份
             var provinceData = response.data.CountryRegion.State;
             for(var i=0;i<provinceData.length;i++){
                 // var cityData = provinceData[i].City;
-                this.provinceList.push(provinceData[i]);// province[i]
-                // for(var j=0;j<provinceData[i].City.length;j++){
-                //     this.cityList.push(cityData[j]);
-                // }
+                this.provinceList.push(provinceData[i].Name);// provinceData[i]表示第i个省的对象,包含该省城市信息
+                // console.log(provinceData[i].Name);
+                this.cityList[i] = new Array();
+                for(var j=0;j<provinceData[i].City.length;j++){
+                  this.cityList[i][j]=provinceData[i].City[j].Name;
+                  // console.log(provinceData[i].City[j].Name)
+                }
             }
-            
+            // console.log(provinceData[2].City[1].Name)// provinceData[i].City为第i个城市的对象数组
 
           })
   }
@@ -121,11 +143,28 @@ export default {
       font-size: 14px;
     }
     .city-list{
+        background: #ebebeb;
         .red{
             color:red;
+            font-size: 18px;
+            font-weight: bold;
+            p{
+              margin-left: 14px;
+            }
+            .pro-inner{
+              background: #f5f5f5;
+            }
             .black{
                 color: #000000;
-                font-size: 12px;
+                font-size: 10px;
+                font-weight:300;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                margin-left: 14px;
+                margin-right: 50px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #c8c7cc;
             }
         }
     }
@@ -135,11 +174,11 @@ export default {
     width: 10%;
     position: absolute;
     right: 2%;
-    top: 10%;
+    top: 35%;
     font-size: 12px;
     text-align: right;
     li{
-      margin-bottom: 5px;
+      margin-bottom: 10px;
     }
   }
   .latest-city{
@@ -155,7 +194,7 @@ export default {
   }
   .hot-city{
     width: 90%;
-    height: 150px;
+    height: 195px;
     background: #f5f5f5;
     margin-top: 10px;
     margin-bottom: 10px;

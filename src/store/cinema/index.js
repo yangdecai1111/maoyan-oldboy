@@ -9,7 +9,8 @@ export default {
     day: new Date().toLocaleDateString(),
     district: [],
     subway: []
-
+    cityName:"深圳",
+    latestCity:['北','上','广'],
   },
   mutations: {
     SETCITYLIST (state, list) {
@@ -26,6 +27,8 @@ export default {
     },
     SETSUBWAY (state, list) {
       state.subway = list
+    whichCity(state){
+      state.cityName="上海";
     }
   },
   actions: {
