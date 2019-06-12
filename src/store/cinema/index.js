@@ -2,11 +2,16 @@ import axios from 'axios'
 export default {
   namespaced: true,
   state: {
-    cityList: []
+    cityList: [],
+    cityName:"深圳",
+    latestCity:['北','上','广'],
   },
   mutations: {
     SETCITYLIST (state, list) {
       state.cityList = list
+    },
+    whichCity(state){
+      state.cityName="上海";
     }
   },
   actions: {
