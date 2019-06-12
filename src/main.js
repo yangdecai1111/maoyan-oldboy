@@ -4,6 +4,10 @@ import router from './router'
 import store from './store'
 import './styles/base.less'
 
+import { Tab, Tabs } from 'vant';
+Vue
+.use(Tab)
+.use(Tabs)
 Vue.config.productionTip = false
 
 new Vue({

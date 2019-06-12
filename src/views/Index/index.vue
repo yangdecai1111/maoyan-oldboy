@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="page-index">
     <router-view></router-view>
     <tabBar :tabs='tabs'/>
   </div>
-
 </template>
+
 <script>
 import tabBar from '@/components/tabBar.vue'
 export default {
@@ -23,3 +23,12 @@ export default {
 
 }
 </script>
+
+<style lang="less">
+.page-index {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+</style>
+
