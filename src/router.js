@@ -34,6 +34,11 @@ export default new Router({
       path: '/center',
       name: 'center',
       component: () => import('./views/Center')
+    },
+    {
+      path: '/cinemaDetail/:id',
+      name: 'cinemaDetail',
+      component: () => import('./views/Detail/cinemaDetail.vue')
     }
   ]
 })
