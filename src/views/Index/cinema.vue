@@ -48,10 +48,14 @@ export default {
     ...mapState('cinema',['cityList'])
   },
   methods: {
-    ...mapActions('cinema', ['getCityList'])
+    ...mapActions('cinema', ['getCityList']),
+    onScroll () {
+      console.log('滚动事件')
+    }
   },
   created () {
     this.getCityList()
+    window.addEventListener('scroll', this.onScroll)
   },
   components:{
     cinemaList
