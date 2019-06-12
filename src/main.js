@@ -5,8 +5,10 @@ import store from './store'
 import './styles/base.less'
 import { Tab, Tabs , Field , Button , List} from 'vant';
 
+
 import { DropdownMenu, DropdownItem } from 'vant'
 Vue.use(DropdownMenu).use(DropdownItem)
+
 Vue.config.productionTip = false
 
 Vue.use(Tab)
