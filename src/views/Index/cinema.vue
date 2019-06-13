@@ -46,9 +46,9 @@ export default {
     }
   },
   computed: {
-    ...mapState('cinema', ['cityList', 'loading'])
+    ...mapState('cinema', ['cityList', 'loading']),
 
-    ...mapState('cinema',['cityList','cityName']),
+    ...mapState('cinema', ['cityList','cityName']),
   },
   methods: {
     ...mapActions('cinema', ['getCityList']),

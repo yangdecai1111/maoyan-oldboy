@@ -1,6 +1,6 @@
 <template>
   <div class="indexmain">
-    <keep-alive include="cinema">
+    <keep-alive include="cinema,moive">
       <router-view></router-view>
     </keep-alive>
     <tabBar :tabs='tabs'/>
@@ -26,9 +26,7 @@ export default {
 }
 </script>
 <style lang="less">
-.page-index {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+.indexmain {
+  height: 100%
 }
 </style>

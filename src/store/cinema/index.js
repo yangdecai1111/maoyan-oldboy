@@ -8,7 +8,7 @@ export default {
     loading: false,
     day: new Date().toLocaleDateString(),
     district: [],
-    subway: []
+    subway: [],
     cityName:"深圳",
     latestCity:['北','上','广'],
   },
@@ -27,8 +27,9 @@ export default {
     },
     SETSUBWAY (state, list) {
       state.subway = list
-    whichCity(state){
-      state.cityName="上海";
+    },
+    whichCity (state) {
+      state.cityName = '上海'
     }
   },
   actions: {

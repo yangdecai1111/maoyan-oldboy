@@ -20,8 +20,8 @@ export default {
 @import '~@/styles/common/mixins.less';
   .tabBar{
     .border-top;
-    // position: fixed;
-    // bottom: 0;
+    position: fixed;
+    bottom: 0;
     width: 100%;
     display: flex;
     padding: 0;

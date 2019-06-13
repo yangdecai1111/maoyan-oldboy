@@ -13,7 +13,7 @@
         </router-link>
         <van-tab disabled></van-tab>
         <van-tab title="正在热映">
-          <ul class="film-list" 
+          <ul class="film-list"
           v-for="todo in filmList"
           :key="todo.id"
           >
@@ -42,6 +42,7 @@
 <script>
 import {mapState,mapActions} from 'vuex'
 export default {
+  name: 'moive',
   data() {
     return {
       active: 1
@@ -62,9 +63,9 @@ export default {
       }
         // console.log(scrollBox.scrollTop,scrollHeight,clientHeight+scrollBox.scrollTop,scrollHeight-(clientHeight+scrollBox.scrollTop))
      },
-     
+
   },
- 
+
   created () {
     this.getFilmList();
   },
@@ -80,6 +81,9 @@ export default {
 .nav-header {
   .nav-header;
 }
+.page-index-movie{
+  height:100%;
+}
 .nav-left {
   position: absolute;
   top: 0;
@@ -90,7 +94,7 @@ export default {
   display: flex;
   width:50px;
   justify-content: center;
-  
+
   .nav-left-font {
     font-size: 14px;
   }
@@ -99,12 +103,11 @@ export default {
   }
 }
 .film-list{
-    
+
     padding: 12px 14px 12px 0;
     height: 90px;
     max-height: 90px;
     position: relative;
-    
     padding-left: 15px;
     background-color: #fff;
     .film-item{
@@ -145,26 +148,25 @@ export default {
   line-height: 27px;
   text-align: center;
   border-radius: 5px
-  
+
 }
 
 .page-index-movie {
-  flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
 .nav-tabs {
-  flex: 1;
   overflow: hidden;
+  height: calc(100% - 100px);
 }
 
 .van-tabs--line {
   display: flex;
   flex-direction: column;
   height: 100%;
-  box-sizing: border-box; 
+  box-sizing: border-box;
   overflow: hidden;
 }
 .film-info-detail{
