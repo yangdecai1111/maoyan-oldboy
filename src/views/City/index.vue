@@ -73,7 +73,8 @@ export default {
         provinceList: [],
         cityList:[],
         // latestCity:['北京','上海','广州'],
-        href: '/cinema'
+        href: '/cinema',
+        a:true
       };
   },
   computed:{
@@ -105,8 +106,6 @@ export default {
             document.documentElement.scrollTop=document.getElementsByClassName('distance')[i].offsetTop; 
           } 
         }
-        
-
         // document.documentElement.scrollTop=document.getElementsByClassName('distance')[0].offsetTop; 
         // 北京:320   定位最近热门:200 设置滚动距离
     }
@@ -129,8 +128,30 @@ export default {
             }
             // console.log(provinceData[2].City[1].Name)// provinceData[i].City为第i个城市的对象数组
 
-          })
-  }
+          });
+  },
+  beforeMount: function () {
+    // this.$toast('提示文案');
+    if(this.a){
+        // Toast.allowMultiple();
+        const toast1 = this.$toast({
+           message:"自动定位失败",
+           type:"fail",
+           duration:1500
+        });
+    }
+  },
+  mounted(){
+    // if(this.a){
+    //     // Toast.allowMultiple();
+    //     const toast1 = this.$toast({
+    //        message:"自动定位中",
+    //        type:"loading"
+    //     });
+    // }
+  },
+  
+        
 }
 </script>
 
