@@ -3,12 +3,12 @@
     <h1 class="nav-header">猫眼电影</h1>
     <div class="nav-tabs">
       <van-tabs v-model="active" class="nav-tabs" ref="mytabs">
-        <router-link to="/cinema"  class="nav-left">
-          <p class="nav-left-font">安溪</p>
+        <router-link to="/city"  class="nav-left">
+          <p class="nav-left-font">{{cityName}}</p>
           <span>▼</span>
         </router-link>
-        <router-link to="/cinema"  class="nav-left">
-          <p class="nav-left-font">安溪</p>
+        <router-link to="/city"  class="nav-left">
+          <p class="nav-left-font">{{cityName}}</p>
           <span>▼</span>
         </router-link>
         <van-tab disabled></van-tab>
@@ -49,7 +49,8 @@ export default {
     };
   },
   computed: {
-    ...mapState('film',['filmList'])
+    ...mapState('film',['filmList']),
+    ...mapState('cinema', ['cityName']),
   },
   methods: {
      ...mapActions('film',['getFilmList']),
@@ -62,7 +63,7 @@ export default {
         this.getFilmList(true);
       }
         // console.log(scrollBox.scrollTop,scrollHeight,clientHeight+scrollBox.scrollTop,scrollHeight-(clientHeight+scrollBox.scrollTop))
-     },
+     }
 
   },
 
