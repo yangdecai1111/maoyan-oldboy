@@ -3,12 +3,12 @@
     <h1 class="nav-header">猫眼电影</h1>
     <div class="nav-tabs">
       <van-tabs v-model="active" class="nav-tabs" ref="mytabs">
-        <router-link to="/city"  class="nav-left">
-          <p class="nav-left-font">{{cityName}}</p>
+        <router-link to="/cinema"  class="nav-left">
+          <p class="nav-left-font">深圳</p>
           <span>▼</span>
         </router-link>
-        <router-link to="/city"  class="nav-left">
-          <p class="nav-left-font">{{cityName}}</p>
+        <router-link to="/cinema"  class="nav-left">
+          <p class="nav-left-font">深圳</p>
           <span>▼</span>
         </router-link>
         <van-tab disabled></van-tab>
@@ -40,42 +40,41 @@
   </div>
 </template>
 <script>
-import {mapState,mapActions} from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   name: 'moive',
-  data() {
+  data () {
     return {
       active: 1
-    };
+    }
   },
   computed: {
     ...mapState('film',['filmList']),
-    ...mapState('cinema', ['cityName']),
+    ...mapState('cinema', ['cityName'])
   },
   methods: {
-     ...mapActions('film',['getFilmList']),
-     onScroll(){
-       let scrollBox = this.$refs['mytabs'].$el.querySelector('.van-tabs__content');
-       let scrollTop=document.documentElement.scrollTop;
-       let scrollHeight = scrollBox.scrollHeight;
-      let clientHeight = scrollBox.clientHeight;
-      if(scrollHeight-(clientHeight+scrollBox.scrollTop)<=0){
-        this.getFilmList(true);
+    ...mapActions('film', ['getFilmList']),
+    onScroll () {
+      let scrollBox = this.$refs['mytabs'].$el.querySelector('.van-tabs__content')
+      let scrollTop = document.documentElement.scrollTop
+      let scrollHeight = scrollBox.scrollHeight
+      let clientHeight = scrollBox.clientHeight
+      if (scrollHeight - (clientHeight + scrollBox.scrollTop) <= 0) {
+        this.getFilmList(true)
       }
-        // console.log(scrollBox.scrollTop,scrollHeight,clientHeight+scrollBox.scrollTop,scrollHeight-(clientHeight+scrollBox.scrollTop))
-     }
-
+      // console.log(scrollBox.scrollTop,scrollHeight,clientHeight+scrollBox.scrollTop,scrollHeight-(clientHeight+scrollBox.scrollTop))
+    }
   },
 
   created () {
-    this.getFilmList();
+    this.getFilmList()
   },
-  mounted() {
+  mounted () {
     console.log(this.$refs['mytabs'])
-    let scrollBox = this.$refs['mytabs'].$el.querySelector('.van-tabs__content');
+    let scrollBox = this.$refs['mytabs'].$el.querySelector('.van-tabs__content')
     scrollBox.addEventListener('scroll', this.onScroll)
-  },
-};
+  }
+}
 </script>
 <style lang="less" scoped>
 @import "~@/styles/common/mixins.less";

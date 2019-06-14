@@ -9,8 +9,11 @@ export default {
     day: new Date().toLocaleDateString(),
     district: [],
     subway: [],
-    cityName:"深圳",
-    latestCity:['北','上','广'],
+    cityName: '深圳',
+    latestCity: ['北', '上', '广'],
+    codeList: 30,
+    cinemaDetail: {},
+    piclist: []
   },
   mutations: {
     SETCITYLIST (state, list) {
@@ -30,10 +33,22 @@ export default {
     },
     whichCity (state) {
       state.cityName = '上海'
+    },
+    SETCODELIST (state, res) {
+      state.codeList = res
+    },
+    SETCINEMADETAIL (state, list) {
+      state.cinemaDetail = list
+    },
+    SETPICLIST (state, list) {
+      state.piclist = list
     }
   },
   actions: {
-    getCityList ({ commit, state }, isMore) {
+    getCityList ({
+      commit,
+      state
+    }, isMore) {
       commit('SETLOADING', true)
       setTimeout(() => {
         axios.get('http://localhost:8080/ajax/cinemaList', {
@@ -51,7 +66,7 @@ export default {
             item: '',
             updateShowDay: false,
             reqId: 1560326026872,
-            cityId: 30
+            cityId: state.codeList
           }
         }).then(response => {
           let res = response.data
@@ -64,16 +79,52 @@ export default {
           commit('ADDOFFSET')
           commit('SETLOADING', false)
         })
-      }, 1000)
+      }, 500)
     },
-    getDistrictList ({ commit }) {
+    getDistrictList ({
+      commit, state
+    }) {
       axios.get('http://localhost:8080/ajax/filterCinemas', {
         params: {
-          ci: 30
+          ci: state.codeList
         }
       }).then(response => {
-        let res = response.data.district
+        let res = response.data
         commit('SETDISTRICT', res)
+      })
+    },
+    getCodeList ({
+      commit
+    }, res) {
+      commit('SETCODELIST', res)
+    },
+    getCinemaDetail ({ commit }, id) {
+      axios.get('http://localhost:8080/ajax/cinemaDetail', {
+        params: {
+          cinemaId: id,
+          movieId: 246973
+        }
+      }).then(response => {
+        let res = response.data
+        commit('SETCINEMADETAIL', res)
+      })
+    },
+    getPicList ({ commit }, id) {
+      axios.get('http://localhost:8080/ajax/cinemaDetail', {
+        params: {
+          cinemaId: id,
+          movieId: 246973
+        }
+      }).then(response => {
+        let res = response.data
+        let data = res.showData.movies
+        let newdata = data.map(function (item) {
+          return {
+            ...item,
+            img: item.img.replace('w.h', '128.180')
+          }
+        })
+        commit('SETPICLIST', newdata)
       })
     }
   }
