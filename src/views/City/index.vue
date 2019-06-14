@@ -9,7 +9,7 @@
             >
             {{item}}
         </li>
-      </ul> 
+      </ul>
     </div>
     <!-- 右边快速查找功能end -->
 
@@ -43,7 +43,7 @@
                 class="red"
                 >
                 <p id="distance">{{province}}</p>
-                
+
                 <ul class="pro-inner">
                     <li
                         v-for="(city,j) in cityList[i]"
@@ -56,9 +56,8 @@
                 </ul>
             </li>
         </ul>
-        
+
     </div>
-      
 
   </div>
 </template>
@@ -67,71 +66,81 @@
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
 export default {
-  data() {
-      return {
-        provinceList: [],
-        cityList:[],
-        // latestCity:['北京','上海','广州'],
-        href: '/cinema'
-      };
+  data () {
+    return {
+      provinceList: [],
+      cityList: [],
+      // latestCity:['北京','上海','广州'],
+      href: '/cinema'
+    }
   },
-  computed:{
-      ...mapState('cinema',['latestCity']),
+  computed: {
+    ...mapState('cinema', ['latestCity', 'codeList'])
   },
   methods: {
-    selected(event){
-      
+    ...mapActions('cinema', ['getCodeList']),
+    selected (event) {
       // console.log(this.$store.state.cinema.cityName);
       // console.log(el.innerText);
       // 点击城市名选择城市
-      var el = event.currentTarget;
-      this.$store.state.cinema.cityName=el.innerText;
+      var el = event.currentTarget
+      axios.get('http://localhost:8080/api/cityList.json').then(response => {
+        let res = response.data
+        for (let i = 0; i < res.length; i++) {
+          if (res[i].name === el.innerText) {
+            this.getCodeList(res[i].code)
+          }
+        }
+      })
+      this.$store.state.cinema.cityName = el.innerText
       // 修改最近使用的城市数据
-      
-      this.$store.state.cinema.latestCity.push(el.innerText);
-      this.$store.state.cinema.latestCity.shift();
 
-      this.$router.go(-1);
+      this.$store.state.cinema.latestCity.push(el.innerText)
+      this.$store.state.cinema.latestCity.shift()
+
+      this.$router.go(-1)
 
       // this.latestCity[0] = el.innerText;
     },
-    seek(event){
-        var el = event.currentTarget.innerHTML;
-        console.log(el);
+    seek (event) {
+      var el = event.currentTarget.innerHTML
+      console.log(el)
 
-        // document.getElementById('scrollBody').scrollTop = 800+'px';
-        // for(var i=0;i<provinceList.length;i++){
-        //     if()
-        // }
-        // var dis = document.getElementById('distance');
-        console.log(document.getElementById('scrollBody').scrollTop);
+      // document.getElementById('scrollBody').scrollTop = 800+'px';
+      // for(var i=0;i<provinceList.length;i++){
+      //     if()
+      // }
+      // var dis = document.getElementById('distance');
+      console.log(document.getElementById('scrollBody').scrollTop)
     }
   },
-
-  created(){
+  watch: {
+    getCodeList (newVal, oldVal) {
+    }
+  },
+  created () {
     axios.get('http://localhost:8080/api/LocList.json')
-          .then(response=>{
-            // console.log(response.data.CountryRegion.State);// Array数组,共33个省份
-            var provinceData = response.data.CountryRegion.State;
-            for(var i=0;i<provinceData.length;i++){
-                // var cityData = provinceData[i].City;
-                this.provinceList.push(provinceData[i].Name);// provinceData[i]表示第i个省的对象,包含该省城市信息
-                // console.log(provinceData[i].Name);
-                this.cityList[i] = new Array();
-                for(var j=0;j<provinceData[i].City.length;j++){
-                  this.cityList[i][j]=provinceData[i].City[j].Name;
-                  // console.log(provinceData[i].City[j].Name)
-                }
-            }
-            // console.log(provinceData[2].City[1].Name)// provinceData[i].City为第i个城市的对象数组
-
-          })
+      .then(response => {
+        // console.log(response.data.CountryRegion.State);// Array数组,共33个省份
+        var provinceData = response.data.CountryRegion.State
+        for (var i = 0; i < provinceData.length; i++) {
+          // var cityData = provinceData[i].City;
+          this.provinceList.push(provinceData[i].Name)// provinceData[i]表示第i个省的对象,包含该省城市信息
+          // console.log(provinceData[i].Code);
+          this.cityList[i] = new Array()
+          for (var j = 0; j < provinceData[i].City.length; j++) {
+            this.cityList[i][j] = provinceData[i].City[j].Code
+            // console.log(provinceData[i].City[j].Code)
+          }
+        }
+        // console.log(provinceData[2].City[1].Name)// provinceData[i].City为第i个城市的对象数组
+      })
   }
 }
 </script>
 
 <style lang="less" scoped>
-  
+
   .city{
     background: #ebebeb;
     height: 100%;
@@ -169,7 +178,7 @@ export default {
         }
     }
   }
-  
+
   .quick-find{
     width: 10%;
     position: absolute;
@@ -204,4 +213,3 @@ export default {
     }
   }
 </style>
-

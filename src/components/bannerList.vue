@@ -21,26 +21,26 @@
   </van-tabs>
 </template>
 <script>
-import { mapActions, mapState} from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
-   data() {
+  data () {
     return {
       active: 2,
-      //items,
-      // 左侧高亮元素的index
-      //mainActiveIndex: 0,
-      // 被选中元素的id
-     // activeId: 1
-    };
+      // items: [],
+      // // 左侧高亮元素的index
+      // mainActiveIndex: 0,
+      // // 被选中元素的id
+      // activeId: 1
+    }
   },
   computed: {
-    ...mapState('cinema', [district])
+    ...mapState('cinema', ['district'])
   },
   methods: {
-    ...mapActions('cinema',['getDistrictList']),
+    ...mapActions('cinema', ['getDistrictList']),
     tabClick (index, title) {
-      console.log(index, title)
-    },
+
+    }
     // onNavClick(index) {
     //   this.mainActiveIndex = index;
     // },
@@ -53,4 +53,3 @@ export default {
   }
 }
 </script>
-

@@ -24,7 +24,7 @@
             </van-cell-group>
           </div>
           <van-button disabled type="primary" size="small">获取验证码</van-button>
-            
+
         </van-tab>
       </van-tabs>
     </div>
@@ -45,14 +45,14 @@
 </template>
 <script>
 export default {
-  data(){
+  data () {
     return {
-      tabAct:1
+      tabAct: 1
     }
   },
-  methods:{
-    back(){
-      this.$router.go(-1);// 返回上一层
+  methods: {
+    back () {
+      this.$router.go(-1)// 返回上一层
     }
   }
 }
@@ -85,7 +85,7 @@ export default {
       margin-right: 3%;
     }
   }
-  
+
   .login-box{
     width: 100%;
     height: 76px;
@@ -122,4 +122,3 @@ export default {
     }
   }
 </style>
-
