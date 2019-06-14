@@ -12,8 +12,19 @@ export default {
     cityName: '深圳',
     latestCity: ['北京', '上海', '广州'],
     codeList: 30,
-    cinemaDetail: {},
-    piclist: []
+    cinemaDetail: {}
+  },
+  getters: {
+    changecinemaDetail (state) {
+      let data = state.cinemaDetail.showData.movies ? state.cinemaDetail.showData.movies : []
+      let newdata = data.map(function (item) {
+        return {
+          ...item,
+          img: item.img.replace('w.h', '128.180')
+        }
+      })
+      return newdata
+    }
   },
   mutations: {
     SETCITYLIST (state, list) {
@@ -39,9 +50,6 @@ export default {
     },
     SETCINEMADETAIL (state, list) {
       state.cinemaDetail = list
-    },
-    SETPICLIST (state, list) {
-      state.piclist = list
     }
   },
   actions: {
@@ -107,25 +115,6 @@ export default {
       }).then(response => {
         let res = response.data
         commit('SETCINEMADETAIL', res)
-      })
-    },
-    getPicList ({ commit }, id) {
-      axios.get('http://localhost:8080/ajax/cinemaDetail', {
-        params: {
-          cinemaId: id,
-          movieId: 246973
-        }
-      }).then(response => {
-        let res = response.data
-        let data = res.showData.movies
-        let newdata = data.map(function (item) {
-          return {
-            ...item,
-            img: item.img.replace('w.h', '128.180')
-          }
-        })
-        commit('SETPICLIST', newdata)
-        console.log(newdata)
       })
     }
   }
