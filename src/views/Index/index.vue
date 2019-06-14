@@ -1,13 +1,16 @@
 <template>
-  <div>
-    <router-view></router-view>
+  <div class="indexmain">
+    <keep-alive include="cinema,moive">
+      <router-view></router-view>
+    </keep-alive>
     <tabBar :tabs='tabs'/>
   </div>
-
 </template>
+
 <script>
 import tabBar from '@/components/tabBar.vue'
 export default {
+  name: 'index',
   data () {
     return {
       tabs: [
@@ -20,6 +23,10 @@ export default {
   components: {
     tabBar
   }
-
 }
 </script>
+<style lang="less">
+.indexmain {
+  height: 100%
+}
+</style>
