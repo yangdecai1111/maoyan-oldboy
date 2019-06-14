@@ -55,7 +55,7 @@ export default {
           let newData3 = [...state.filmList, ...state.filmList2]
           commit('SETFILMLIST', newData3)
           commit('ADDPAGENUM')
-          Toast.clear()
+          toast1.clear()
         })
       } else {
         axios.get('http://localhost:8080/ajax/movieOnInfoList', {
@@ -77,7 +77,6 @@ export default {
             commit('ADDPAGENUM')
             Toast.clear()
           })
-      }
     }
   }
 }

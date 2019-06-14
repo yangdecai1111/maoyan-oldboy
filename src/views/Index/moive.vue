@@ -49,7 +49,8 @@ export default {
     }
   },
   computed: {
-    ...mapState('film', ['filmList'])
+    ...mapState('film',['filmList']),
+    ...mapState('cinema', ['cityName'])
   },
   methods: {
     ...mapActions('film', ['getFilmList']),
@@ -63,7 +64,6 @@ export default {
       }
       // console.log(scrollBox.scrollTop,scrollHeight,clientHeight+scrollBox.scrollTop,scrollHeight-(clientHeight+scrollBox.scrollTop))
     }
-
   },
 
   created () {
