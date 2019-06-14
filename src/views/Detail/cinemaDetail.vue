@@ -16,44 +16,58 @@
       </a>
     </div>
     <ul class="post-bg">
-      <li v-for="item in this.piclist" :key="item.id" class="post-cild" @click="listItem">
+      <li v-for="(item, index) in this.changecinemaDetail" :key="item.index" class="post-cild" @click="listItem(item, index)">
          <img :src="item.img" alt="">
       </li>
     </ul>
     <div class="cinema-info2">
-      <div class="moive-title">{{moiveName}}</div>
+      <div class="moive-title">{{moiveName}} <span style="color:#feb312;font-weight:900;">{{moivesc == 0.0? '暂无评分' : moivesc + '分'}}</span></div>
       <div class="moive-desc">{{moivedesc}}</div>
     </div>
+    <van-tabs v-model="active" >
+      <van-tab :title="list" v-for="list in todayPlay" :key="list" class="todaylist" @click="listDetail(list)">
+      </van-tab>
+    </van-tabs>
   </div>
-
 </template>
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapGetters } from 'vuex'
 export default {
   data () {
     return {
+      active: 0,
       cinemaId: this.$route.params.id,
       moiveName: '',
       moivedesc: '',
+      moivesc: '',
+      todayPlay: []
     }
   },
   computed: {
-    ...mapState('cinema', ['cinemaDetail', 'piclist'])
+    ...mapState('cinema', ['cinemaDetail']),
+    ...mapGetters('cinema', ['changecinemaDetail'])
+  },
+  watch: {
+    changecinemaDetail (newVal, oldVal) {
+      if (newVal.length > 0) {
+        this.listItem(newVal[0])
+      }
+    }
   },
   methods: {
-    ...mapActions('cinema', ['getCinemaDetail', 'getPicList']),
-    listItem (event) {
-      for(let i=0;i<this.piclist.length;i++){
-        if(event.target.src == this.piclist[i].img) {
-            this.moiveName = this.piclist[i].nm
-            this.moivedesc =this.piclist[i].desc
-        }
+    ...mapActions('cinema', ['getCinemaDetail']),
+    listItem (item, index) {
+      console.log(index)
+      this.moiveName = item.nm
+      this.moivedesc = item.desc
+      this.moivesc = item.sc
+      for (let i = 0; i < item.shows.length; i++) {
+        this.todayPlay.push(item.shows[i].dateShow)
       }
     }
   },
   created () {
     this.getCinemaDetail(this.cinemaId)
-    this.getPicList(this.cinemaId)
   }
 }
 </script>
@@ -140,5 +154,9 @@ export default {
         font-size: 13px;
         color: #999;
       }
+    }
+    .todaylist{
+      overflow-x: auto;
+      overflow-y: hidden;
     }
 </style>
