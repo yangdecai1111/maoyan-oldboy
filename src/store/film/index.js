@@ -1,5 +1,7 @@
 import axios from 'axios'
-import { Toast } from 'vant'
+import {
+  Toast
+} from 'vant'
 export default {
   namespaced: true,
   state: {
@@ -23,12 +25,14 @@ export default {
     }
   },
   actions: {
-    getFilmList ({ commit, state }, isLoadMore) {
+    getFilmList ({
+      commit,
+      state
+    }, isLoadMore) {
       Toast.loading({
         duration: 0,
         message: '加载中...'
       })
-      let filmList1 = state.filmList
       let arr = state.movieIdsArr.slice(2 + state.pageNum, 12 + state.pageNum)
       console.log(arr)
       let str = arr.join(',')
@@ -55,7 +59,7 @@ export default {
           let newData3 = [...state.filmList, ...state.filmList2]
           commit('SETFILMLIST', newData3)
           commit('ADDPAGENUM')
-          toast1.clear()
+          Toast.clear()
         })
       } else {
         axios.get('http://localhost:8080/ajax/movieOnInfoList', {
@@ -77,6 +81,7 @@ export default {
             commit('ADDPAGENUM')
             Toast.clear()
           })
+      }
     }
   }
 }
