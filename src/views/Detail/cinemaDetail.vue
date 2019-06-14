@@ -16,13 +16,13 @@
       </a>
     </div>
     <ul class="post-bg">
-      <li v-for="item in this.piclist" :key="item.id" class="post-cild">
+      <li v-for="item in this.piclist" :key="item.id" class="post-cild" @click="listItem">
          <img :src="item.img" alt="">
       </li>
     </ul>
     <div class="cinema-info2">
-      <div class="moive-title">dsafdsaf</div>
-      <div class="moive-desc">114分钟 | 动作 | 苏菲·特纳</div>
+      <div class="moive-title">{{moiveName}}</div>
+      <div class="moive-desc">{{moivedesc}}</div>
     </div>
   </div>
 
@@ -32,14 +32,24 @@ import { mapActions, mapState } from 'vuex'
 export default {
   data () {
     return {
-      cinemaId: this.$route.params.id
+      cinemaId: this.$route.params.id,
+      moiveName: '',
+      moivedesc: '',
     }
   },
   computed: {
-    ...mapState('cinema', ['cinemaDetail','piclist'])
+    ...mapState('cinema', ['cinemaDetail', 'piclist'])
   },
   methods: {
-    ...mapActions('cinema', ['getCinemaDetail','getPicList']),
+    ...mapActions('cinema', ['getCinemaDetail', 'getPicList']),
+    listItem (event) {
+      for(let i=0;i<this.piclist.length;i++){
+        if(event.target.src == this.piclist[i].img) {
+            this.moiveName = this.piclist[i].nm
+            this.moivedesc =this.piclist[i].desc
+        }
+      }
+    }
   },
   created () {
     this.getCinemaDetail(this.cinemaId)
@@ -105,9 +115,12 @@ export default {
       opacity: .55;
       display: flex;
       overflow-y: auto;
+      box-sizing: border-box;
+      padding-top:20px;
       & .post-cild img{
         width: 74px;
-        height: 110px;
+        height: 96px;
+        margin-left: 14px;
       }
     }
   .cinema-info2{
@@ -129,4 +142,3 @@ export default {
       }
     }
 </style>
-

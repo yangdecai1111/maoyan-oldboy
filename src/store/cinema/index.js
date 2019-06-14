@@ -125,6 +125,7 @@ export default {
           }
         })
         commit('SETPICLIST', newdata)
+        console.log(newdata)
       })
     }
   }
