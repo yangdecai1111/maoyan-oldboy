@@ -18,8 +18,8 @@ export default {
 
   },
   getters: {
-    formatComingList(state) {
-      let list = state.comingList;
+    formatComingList (state) {
+      let list = state.comingList
       let index = 0
       let hash = {}
       var result = []
@@ -37,43 +37,43 @@ export default {
           result.push(obj)
         }
       }
-      return result;
+      return result
     }
   },
   mutations: {
-    SETFILMLIST(state, list) {
+    SETFILMLIST (state, list) {
       state.filmList = list
     },
-    SETFILMLIST2(state, list) {
+    SETFILMLIST2 (state, list) {
       state.filmList2 = list
     },
-    SETmovieIdsArr(state, movieIds) {
+    SETmovieIdsArr (state, movieIds) {
       state.movieIdsArr = movieIds
     },
-    ADDPAGENUM(state, isReset) {
+    ADDPAGENUM (state, isReset) {
       isReset ? state.pageNum = 10 : state.pageNum += 10
     },
-    MOSTLIST(state, list) {
+    MOSTLIST (state, list) {
       state.mostList = list
     },
-    ADDOFFSET(state, isReset) {
+    ADDOFFSET (state, isReset) {
       isReset ? state.offsetNum = 0 : state.offsetNum += 10
     },
-    MOSTLIST2(state, list) {
+    MOSTLIST2 (state, list) {
       state.mostList2 = list
     },
-    COMINGLIST(state, list) {
+    COMINGLIST (state, list) {
       state.comingList = list
     },
-    SETmovieIdsArr2(state, movieIds) {
+    SETmovieIdsArr2 (state, movieIds) {
       state.movieIdsArr2 = movieIds
     },
-    ADDPAGENUM2(state, isReset) {
+    ADDPAGENUM2 (state, isReset) {
       isReset ? state.pageNum2 = 10 : state.pageNum2 += 10
-    },
+    }
   },
   actions: {
-    getFilmList({
+    getFilmList ({
       commit,
       state
     }, isLoadMore) {
@@ -84,9 +84,9 @@ export default {
       let arr = state.movieIdsArr.slice(2 + state.pageNum, 12 + state.pageNum)
       // console.log(arr);
       let str = arr.join(',')
-      console.log(str);
+      console.log(str)
       if (isLoadMore) {
-        console.log(123);
+        console.log(123)
         axios.get('http://localhost:8080/ajax/moreComingList', {
           params: {
             token: '',
@@ -101,40 +101,39 @@ export default {
               img: item.img.replace('w.h', '128.180')
             }
           })
-          commit("SETFILMLIST2", newData2)
+          commit('SETFILMLIST2', newData2)
           let newData3 = [...state.filmList, ...state.filmList2]
-          commit("SETFILMLIST", newData3)
+          commit('SETFILMLIST', newData3)
           commit('ADDPAGENUM')
           Toast.clear()
         })
       } else {
         axios.get('http://localhost:8080/ajax/movieOnInfoList', {
-            params: {
-              token: ''
-            }
-          })
+          params: {
+            token: ''
+          }
+        })
           .then(res => {
             let movieIdsArr = res.data.movieIds
-            let data = res.data.movieList;
+            let data = res.data.movieList
             let newData = data.map(function (item) {
               return {
                 ...item,
                 img: item.img.replace('w.h', '128.180')
               }
             })
-            commit("SETmovieIdsArr", movieIdsArr)
-            commit("SETFILMLIST", newData)
+            commit('SETmovieIdsArr', movieIdsArr)
+            commit('SETFILMLIST', newData)
             commit('ADDPAGENUM')
             Toast.clear()
           })
       }
-
     },
-    getmostList({
+    getmostList ({
       commit,
       state
     }, isMore) {
-      let offsetNum = state.offsetNum;
+      let offsetNum = state.offsetNum
       let setmostList = state.setmostList
       axios.get('http://localhost:8080/ajax/mostExpected', {
         params: {
@@ -162,12 +161,10 @@ export default {
           commit('MOSTLIST', setmostList)
           commit('ADDOFFSET')
         }
-
-
       })
     },
 
-    getcomingList({
+    getcomingList ({
       commit,
       state
     }, isComing) {
@@ -180,10 +177,10 @@ export default {
       let str = arr.join(',')
       if (isComing) {
         console.log('jinlaimei')
-        axios.get("http://localhost:8080/ajax/moreComingList", {
+        axios.get('http://localhost:8080/ajax/moreComingList', {
           params: {
             ci: 10,
-            token: "",
+            token: '',
             limit: 10,
             movieIds: str
           }
@@ -197,21 +194,20 @@ export default {
             }
           })
 
-
           // commit("COMINGLIST2",newData2)
           // let newData3 = [...state.comingList,...newData2]
-          commit("COMINGLIST", [...state.comingList, ...newData2])
+          commit('COMINGLIST', [...state.comingList, ...newData2])
           commit('ADDPAGENUM2')
           Toast.clear()
         })
       } else {
-        axios.get("http://localhost:8080/ajax/comingList", {
-            params: {
-              ci: 10,
-              token: '',
-              limit: 10
-            }
-          })
+        axios.get('http://localhost:8080/ajax/comingList', {
+          params: {
+            ci: 10,
+            token: '',
+            limit: 10
+          }
+        })
           .then(res => {
             let coming = res.data.coming
             let movieIds = res.data.movieIds
@@ -224,8 +220,8 @@ export default {
                 img: item.img.replace('w.h', '128.180')
               }
             })
-            commit("COMINGLIST", newData)
-            commit("SETmovieIdsArr2", movieIds)
+            commit('COMINGLIST', newData)
+            commit('SETmovieIdsArr2', movieIds)
             commit('ADDPAGENUM2')
             Toast.clear()
           })

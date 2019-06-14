@@ -8,9 +8,9 @@
     </div>
     <div class="t_top">
       <i class="iconfont icon-fdj"></i>
-      <input 
+      <input
       type="text"
-      placeholder="搜影院" 
+      placeholder="搜影院"
       class="txt"
       v-model="searchVal"
       >
@@ -26,7 +26,7 @@
             :key="item.id"
             class="a_main"
          >
-          <p class="t_main">{{ item.nm }} 
+          <p class="t_main">{{ item.nm }}
             <span>{{ item.sellPrice }}</span>
             <span>元起</span>
           </p>
@@ -35,10 +35,10 @@
             <span>{{ item.distance }}</span>
           </p>
           <p class="d_main">
-            <router-link 
+            <router-link
              class="a_map"
              tag="span"
-             :to="{ 
+             :to="{
                 name: 'place',
                 params: {
                   id: item.id
@@ -46,7 +46,7 @@
               }"
             >座
             </router-link>
-            <router-link 
+            <router-link
               v-if="item.hallType"
               tag="span"
               class="b_map"
@@ -55,9 +55,9 @@
                 params: {
                   id: item.id
                 }
-              } "> {{ item.hallType }} 
+              } "> {{ item.hallType }}
             </router-link>
-            <router-link 
+            <router-link
               class="c_map"
               tag="span"
               :to="{
@@ -67,7 +67,7 @@
                   }
               }">退
             </router-link>
-            <router-link 
+            <router-link
               class="d_map"
               tag="span"
               :to="{
@@ -85,34 +85,34 @@
   </div>
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions } from 'vuex'
 export default {
-  data() {
+  data () {
     return {
-      searchVal: ""
-    };
+      searchVal: ''
+    }
   },
   watch: {
     searchVal: {
-      handler(newVal, oldVal) {
-        clearTimeout(this.timer);
+      handler (newVal, oldVal) {
+        clearTimeout(this.timer)
         this.timer = setTimeout(() => {
           this.getSearchList({
             newVal: newVal,
             inputVal: 2
-          });
-        }, 1000);
+          })
+        }, 1000)
       },
       immediate: false
     }
   },
   computed: {
-    ...mapState("search", ["searchList"]),
+    ...mapState('search', ['searchList'])
   },
   methods: {
-    ...mapActions("search", ["getSearchList"])
+    ...mapActions('search', ['getSearchList'])
   }
-};
+}
 </script>
 <style lang="less" spaced>
 @import "~@/styles/common/mixins.less";
@@ -252,4 +252,3 @@ body,
   }
 }
 </style>
-

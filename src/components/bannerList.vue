@@ -25,7 +25,7 @@ import { mapActions, mapState } from 'vuex'
 export default {
   data () {
     return {
-      active: 2,
+      active: 2
       // items: [],
       // // 左侧高亮元素的index
       // mainActiveIndex: 0,

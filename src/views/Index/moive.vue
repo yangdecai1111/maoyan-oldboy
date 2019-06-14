@@ -3,11 +3,11 @@
     <h1 class="nav-header">猫眼电影</h1>
     <div class="nav-tabs">
       <van-tabs v-model="active" class="nav-tabs" ref="mytabs">
-        <router-link to="/cinema" class="nav-left">
+        <router-link to="/city" class="nav-left">
           <p class="nav-left-font">深圳</p>
           <span>▼</span>
         </router-link>
-        <router-link to="/cinema" class="nav-left2">
+        <router-link to="/sousuo" class="nav-left2">
           <p class="nav-left-font2"><van-icon name="search" /></p>
         </router-link>
         <van-tab disabled></van-tab>
@@ -39,7 +39,7 @@
             <p class="most-title">近期最受期待</p>
 
             <div class="most-expected-list" >
-               <div class="expected-item" 
+               <div class="expected-item"
                v-for="todo in mostList"
                :key="todo.id"
                >
@@ -59,7 +59,7 @@
             :key="index"
             >
               <p class="most-kimi-p">{{item.comingTitle}}</p>
-               <ul class="film-list" v-for="main in item.list" 
+               <ul class="film-list" v-for="main in item.list"
                :key="main.id"
                >
             <li class="film-item">
@@ -75,95 +75,88 @@
               <div
                 class="film-buy"
                 :style="{'background': main.showst===4  ? 'blue' :'yellow' }"
-                
+
               >{{main.showst===4?'预售':'想看'}}</div>
             </li>
           </ul>
 </div>
-          
+
             </div>
-            
+
         </van-tab>
         <van-tab disabled>
         </van-tab>
-        
+
       </van-tabs>
-      
+
     </div>
   </div>
 </template>
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
-  name: "moive",
-  data() {
+  name: 'moive',
+  data () {
     return {
       active: 1
     }
   },
   computed: {
-    ...mapState("film", ["filmList",'mostList']),
-    ...mapGetters('film',['formatComingList'])
+    ...mapState('film', ['filmList', 'mostList']),
+    ...mapGetters('film', ['formatComingList'])
   },
   watch: {
     active (newVal, oldVal) {
       this.$nextTick(() => {
-        let boxEl = this.$refs['kimi'].$el.querySelector('.most-expected-list');
+        let boxEl = this.$refs['kimi'].$el.querySelector('.most-expected-list')
         // console.log(boxEl)
-        boxEl.addEventListener("scroll", this.onScroll2);
+        boxEl.addEventListener('scroll', this.onScroll2)
       })
-      
     }
   },
   methods: {
-    ...mapActions("film", ["getFilmList","getmostList","getcomingList"]),
+    ...mapActions('film', ['getFilmList', 'getmostList', 'getcomingList']),
 
-    onScroll() {
-      let scrollBox = this.$refs["mytabs"].$el.querySelector(
-        ".van-tabs__content"
-      );
-      let scrollTop = document.documentElement.scrollTop;
-      let scrollHeight = scrollBox.scrollHeight;
-      let clientHeight = scrollBox.clientHeight;
+    onScroll () {
+      let scrollBox = this.$refs['mytabs'].$el.querySelector(
+        '.van-tabs__content'
+      )
+      let scrollTop = document.documentElement.scrollTop
+      let scrollHeight = scrollBox.scrollHeight
+      let clientHeight = scrollBox.clientHeight
       if (scrollHeight - (clientHeight + scrollBox.scrollTop) <= 0) {
-        this.getFilmList(true);
-        this.getcomingList(true);
+        this.getFilmList(true)
+        this.getcomingList(true)
       }
     },
-    onScroll2(){
+    onScroll2 () {
       // console.log(this.$refs["mytabs2"]);
-      let boxEl = this.$refs['kimi'].$el.querySelector('.most-expected-list');
+      let boxEl = this.$refs['kimi'].$el.querySelector('.most-expected-list')
       // console.log(boxEl.scrollLeft)
 
       let scrollLeft = boxEl.scrollLeft
-      let scrollWidth=boxEl.scrollWidth
-      let clientWidth=boxEl.clientWidth
-      if(scrollWidth-(scrollLeft+clientWidth)<=0){
-        this.getmostList(true);
+      let scrollWidth = boxEl.scrollWidth
+      let clientWidth = boxEl.clientWidth
+      if (scrollWidth - (scrollLeft + clientWidth) <= 0) {
+        this.getmostList(true)
       }
       //  console.log(scrollLeft)
       // console.log(scrollWidth)
       // console.log(clientWidth)
-     
-      
-
     }
   },
 
-  created() {
-    this.getFilmList();
-    this.getmostList();
-    this.getcomingList();
+  created () {
+    this.getFilmList()
+    this.getmostList()
+    this.getcomingList()
   },
-  mounted() {
-    
-
-
+  mounted () {
     // console.log(this.$refs["mytabs"]);
-    let scrollBox = this.$refs["mytabs"].$el.querySelector(
-      ".van-tabs__content"
-    );
-    scrollBox.addEventListener("scroll", this.onScroll);
+    let scrollBox = this.$refs['mytabs'].$el.querySelector(
+      '.van-tabs__content'
+    )
+    scrollBox.addEventListener('scroll', this.onScroll)
     // console.log(this.$refs['kimi'].$el.querySelector(".van-tab__pane"))
   }
 }
@@ -185,7 +178,7 @@ export default {
   line-height: 44px;
   display: flex;
   width: 50px;
-  
+
 }
 .nav-left-font2{
     font-size: 20px;
@@ -205,7 +198,7 @@ export default {
   .nav-left-font {
     font-size: 14px;
   }
-  
+
   span {
     color: #cccccc;
   }
@@ -302,7 +295,7 @@ export default {
     margin: 0 0 12px;
     font-size: 14px;
     color: #333;
-    
+
   }
   .most-expected-list{
     overflow-y:hidden;

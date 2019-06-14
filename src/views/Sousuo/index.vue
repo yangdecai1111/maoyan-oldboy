@@ -1,14 +1,16 @@
 <template>
   <div class="top">
     <div class="t_top">
+      <router-link to="/moive">
       <i class="iconfont icon-zjt"></i>
+      </router-link>
       <div class="c_top">猫眼电影</div>
     </div>
     <div class="b_top">
       <i class="iconfont icon-fdj"></i>
-      <input 
+      <input
       type="text"
-      placeholder="搜电影" 
+      placeholder="搜电影"
       class="txt"
       v-model="sousuoVal"
       >
@@ -25,7 +27,7 @@
             class="a_main"
          >
           <img :src="item.img" alt="" class="q_main">
-          <p class="t_main">{{ item.nm }} 
+          <p class="t_main">{{ item.nm }}
             <span>{{ item.ver }}</span>
             <span v-if="item.globalReleased === false">{{ item.wish }}</span>
             <span v-if="item.globalReleased === false">人想看</span>
@@ -39,10 +41,10 @@
             {{ item.cat }}
           </p>
           <p class="d_main">
-            <router-link 
+            <router-link
              class="a_map"
              tag="span"
-             :to="{ 
+             :to="{
                 name: 'place',
                 params: {
                   id: item.id
@@ -50,7 +52,7 @@
               }"
             >{{ item.rt }}
             </router-link>
-            <router-link 
+            <router-link
               v-if="item.hallType"
               tag="span"
               class="b_map"
@@ -59,7 +61,7 @@
                 params: {
                   id: item.id
                 }
-              } "> {{ item.hallType }} 
+              } "> {{ item.hallType }}
             </router-link>
             <span class="e_map">{{ item.vipDesc }}</span>
           </p>
@@ -69,32 +71,32 @@
   </div>
 </template>
 <script>
-import { mapState,mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex'
 export default {
   data () {
-   return {
-     sousuoVal: ''
-   }
+    return {
+      sousuoVal: ''
+    }
   },
   watch: {
     sousuoVal: {
-      handler (newVal,oldVal) {
-        clearTimeout(this.timer);
+      handler (newVal, oldVal) {
+        clearTimeout(this.timer)
         this.timer = setTimeout(() => {
           this.getSearchList({
             newVal: newVal,
             inputVal: -1
-          });
-        }, 1000);
+          })
+        }, 1000)
       },
       immediate: false
     }
   },
   computed: {
-    ...mapState('search', ['searchList']),
+    ...mapState('search', ['searchList'])
   },
   methods: {
-   ...mapActions('search', ['getSearchList'])
+    ...mapActions('search', ['getSearchList'])
   }
 }
 </script>
@@ -233,4 +235,3 @@ export default {
    }
  }
 </style>
-

@@ -12,7 +12,7 @@ module.exports = {
 //           }
 //       }
 //   }
-    devServer: {
-        proxy: 'http://m.maoyan.com/'
-    }
+  devServer: {
+    proxy: 'http://m.maoyan.com/'
+  }
 }
