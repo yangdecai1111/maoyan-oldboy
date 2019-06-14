@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './styles/base.less'
-import { Tab, Tabs, Field, Button, List, TreeSelect, DropdownMenu, DropdownItem } from 'vant'
+import { Tab, Tabs, Field, Button, List, TreeSelect, DropdownMenu, DropdownItem,Icon } from 'vant'
 
 Vue.config.productionTip = false
 
@@ -15,6 +15,7 @@ Vue.use(Tab)
   .use(TreeSelect)
   .use(DropdownMenu)
   .use(DropdownItem)
+  .use(Icon)
 
 new Vue({
   router,
