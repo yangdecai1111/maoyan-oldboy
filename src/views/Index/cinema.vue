@@ -13,7 +13,9 @@
         </router-link>
       </div>
       <div>
-        <input type="text" class="serach" placeholder="搜影院">
+        <router-link to="/search">
+          <input type="text" class="serach" placeholder="搜影院">
+        </router-link>
       </div>
     </div>
     <van-dropdown-menu>
@@ -46,9 +48,12 @@ export default {
     }
   },
   computed: {
-    ...mapState('cinema', ['cityList', 'loading']),
-
-    ...mapState('cinema', ['cityList','cityName']),
+    ...mapState('cinema', ['cityList', 'loading', 'cityName', 'codeList'])
+  },
+  watch: {
+    codeList (newval, oldval) {
+      this.getCityList()
+    }
   },
   methods: {
     ...mapActions('cinema', ['getCityList']),

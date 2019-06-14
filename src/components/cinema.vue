@@ -1,12 +1,13 @@
 <template>
   <ul class="listbox">
     <router-link
-      class="listitem"
+      class="listitem line-ellipsis"
       v-for="list in cinemaList"
       :key="list.id"
       tag="li"
       :to="{ name: 'cinemaDetail',
-      params: { id: list.id} }">
+      params: { id: list.id} }"
+      >
       <div class="list-title">
         <span class="list-nm">{{list.nm}}</span>
         <span class="list-price">{{list.sellPrice}}</span>
@@ -88,9 +89,6 @@ export default {
     & .list-title{
       line-height: 23px;
       height: 23px;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
       & .list-nm{
         font-size: 16px;
         color: #000;

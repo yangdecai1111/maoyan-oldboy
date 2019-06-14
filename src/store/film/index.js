@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios'
 import {
   Toast
 } from 'vant'
@@ -101,7 +101,6 @@ export default {
               img: item.img.replace('w.h', '128.180')
             }
           })
-
           commit("SETFILMLIST2", newData2)
           let newData3 = [...state.filmList, ...state.filmList2]
           commit("SETFILMLIST", newData3)

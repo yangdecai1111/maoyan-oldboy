@@ -99,7 +99,7 @@ export default {
   data() {
     return {
       active: 1
-    };
+    }
   },
   computed: {
     ...mapState("film", ["filmList",'mostList']),
@@ -166,7 +166,7 @@ export default {
     scrollBox.addEventListener("scroll", this.onScroll);
     // console.log(this.$refs['kimi'].$el.querySelector(".van-tab__pane"))
   }
-};
+}
 </script>
 <style lang="less" scoped>
 @import "~@/styles/common/mixins.less";

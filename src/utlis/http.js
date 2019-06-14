@@ -1,11 +1,11 @@
-import axios from './node_modules/axios';
-const http=axios.create();
+import axios from './node_modules/axios'
+const http = axios.create()
 
-http.defaults.baseURL =Process.env.NODE_ENV ==='production' ? 'http://m.maoyan.com/':'http://m.maoyan.com/';
+http.defaults.baseURL = Process.env.NODE_ENV === 'production' ? 'http://m.maoyan.com/' : 'http://m.maoyan.com/'
 
-http.defaults.timeout=1000;
+http.defaults.timeout = 1000
 
-http.interceptors.response.use(response=>{
+http.interceptors.response.use(response => {
   let res = response.data
   if (res.status === 0) {
     // 接口真正成功

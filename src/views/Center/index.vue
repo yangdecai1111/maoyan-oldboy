@@ -10,21 +10,21 @@
       <van-tabs v-model="tabAct">
         <van-tab title="美团账号登录">
           <!-- 登录表单 -->
-            <van-cell-group>
-              <van-field v-model="value" placeholder="账户名/手机号/Email" />
-              <van-field v-model="value" placeholder="请输入您的密码" />
-            </van-cell-group>
+            <!-- <van-cell-group> -->
+              <van-field placeholder="账户名/手机号/Email" />
+              <van-field placeholder="请输入您的密码" />
+            <!-- </van-cell-group> -->
         </van-tab>
         <van-tab title="手机验证登录">
           <!-- 登录表单 -->
           <div class="login-form">
-            <van-cell-group>
-              <van-field v-model="value" placeholder="请输入手机号" />
-              <van-field v-model="value" placeholder="请输入短信验证码" />
-            </van-cell-group>
+            <!-- <van-cell-group> -->
+              <van-field placeholder="请输入手机号" />
+              <van-field placeholder="请输入短信验证码" />
+            <!-- </van-cell-group> -->
           </div>
           <van-button disabled type="primary" size="small">获取验证码</van-button>
-            
+
         </van-tab>
       </van-tabs>
     </div>
@@ -45,14 +45,14 @@
 </template>
 <script>
 export default {
-  data(){
+  data () {
     return {
-      tabAct:1
+      tabAct: 1
     }
   },
-  methods:{
-    back(){
-      this.$router.go(-1);// 返回上一层
+  methods: {
+    back () {
+      this.$router.go(-1)// 返回上一层
     }
   }
 }
@@ -85,7 +85,7 @@ export default {
       margin-right: 3%;
     }
   }
-  
+
   .login-box{
     width: 100%;
     height: 76px;
@@ -122,4 +122,3 @@ export default {
     }
   }
 </style>
-

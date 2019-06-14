@@ -6,10 +6,11 @@
         <li @click="seek($event)">定位最近热门</li>
         <li v-for="(item,i) in provinceList"
             :key="i"
+            @click="seek($event)"
             >
             {{item}}
         </li>
-      </ul> 
+      </ul>
     </div>
     <!-- 右边快速查找功能end -->
 
@@ -42,8 +43,7 @@
                 :key="i"
                 class="red"
                 >
-                <p id="distance">{{province}}</p>
-                
+                <p class="distance">{{province}}</p>
                 <ul class="pro-inner">
                     <li
                         v-for="(city,j) in cityList[i]"
@@ -56,9 +56,8 @@
                 </ul>
             </li>
         </ul>
-        
+
     </div>
-      
 
   </div>
 </template>
@@ -67,48 +66,60 @@
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
 export default {
-  data() {
-      return {
-        provinceList: [],
-        cityList:[],
-        // latestCity:['北京','上海','广州'],
-        href: '/cinema'
-      };
+  data () {
+    return {
+      provinceList: [],
+      cityList: [],
+      // latestCity:['北京','上海','广州'],
+      href: '/cinema'
+    }
   },
-  computed:{
-      ...mapState('cinema',['latestCity']),
+  computed: {
+    ...mapState('cinema', ['latestCity', 'codeList'])
   },
   methods: {
-    selected(event){
-      
+    ...mapActions('cinema', ['getCodeList']),
+    selected (event) {
       // console.log(this.$store.state.cinema.cityName);
       // console.log(el.innerText);
       // 点击城市名选择城市
-      var el = event.currentTarget;
-      this.$store.state.cinema.cityName=el.innerText;
+      var el = event.currentTarget
+      axios.get('http://localhost:8080/api/cityList.json').then(response => {
+        let res = response.data
+        for (let i = 0; i < res.length; i++) {
+          if (res[i].name === el.innerText) {
+            this.getCodeList(res[i].code)
+          }
+        }
+      })
+      this.$store.state.cinema.cityName = el.innerText
       // 修改最近使用的城市数据
-      
-      this.$store.state.cinema.latestCity.push(el.innerText);
-      this.$store.state.cinema.latestCity.shift();
 
-      this.$router.go(-1);
+      this.$store.state.cinema.latestCity.push(el.innerText)
+      this.$store.state.cinema.latestCity.shift()
+
+      this.$router.go(-1)
 
       // this.latestCity[0] = el.innerText;
     },
-    seek(event){
-        var el = event.currentTarget.innerHTML;
+    seek (event) {
+      var el = event.currentTarget.innerText;
         console.log(el);
-
-        // document.getElementById('scrollBody').scrollTop = 800+'px';
-        // for(var i=0;i<provinceList.length;i++){
-        //     if()
-        // }
-        // var dis = document.getElementById('distance');
-        console.log(document.getElementById('scrollBody').scrollTop);
+        for(var i=0;i<this.provinceList.length;i++){
+          if(this.provinceList[i] == el){
+            // console.log(this.provinceList[i]);
+            document.documentElement.scrollTop=document.getElementsByClassName('distance')[i].offsetTop; 
+          } 
+        }
+        // document.documentElement.scrollTop=document.getElementsByClassName('distance')[0].offsetTop; 
+        // 北京:320   定位最近热门:200 设置滚动距离
     }
   },
-
-  created(){
+  watch: {
+    getCodeList (newVal, oldVal) {
+    }
+  },
+  created () {
     axios.get('http://localhost:8080/api/LocList.json')
           .then(response=>{
             // console.log(response.data.CountryRegion.State);// Array数组,共33个省份
@@ -125,13 +136,33 @@ export default {
             }
             // console.log(provinceData[2].City[1].Name)// provinceData[i].City为第i个城市的对象数组
 
-          })
-  }
+          });
+  },
+  beforeMount: function () {
+    // this.$toast('提示文案');
+    if(this.a){
+        // Toast.allowMultiple();
+        const toast1 = this.$toast({
+           message:"自动定位失败",
+           type:"fail",
+           duration:1500
+        });
+    }
+  },
+  mounted(){
+    // if(this.a){
+    //     // Toast.allowMultiple();
+    //     const toast1 = this.$toast({
+    //        message:"自动定位中",
+    //        type:"loading"
+    //     });
+    // }
+  },
 }
 </script>
 
 <style lang="less" scoped>
-  
+
   .city{
     background: #ebebeb;
     height: 100%;
@@ -169,7 +200,7 @@ export default {
         }
     }
   }
-  
+
   .quick-find{
     width: 10%;
     position: absolute;
@@ -204,4 +235,3 @@ export default {
     }
   }
 </style>
-
