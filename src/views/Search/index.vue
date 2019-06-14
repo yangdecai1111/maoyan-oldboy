@@ -1,7 +1,7 @@
 <template>
   <div class="top">
     <div class="s_top">
-      <router-link to="/" tag="div">
+      <router-link to="/cinema" tag="div">
         <i class="iconfont icon-zjt"></i>
       </router-link>
       <div class="c_top">猫眼电影</div>
