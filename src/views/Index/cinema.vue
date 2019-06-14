@@ -13,7 +13,9 @@
         </router-link>
       </div>
       <div>
-        <input type="text" class="serach" placeholder="搜影院">
+        <router-link to="/search">
+          <input type="text" class="serach" placeholder="搜影院">
+        </router-link>
       </div>
     </div>
     <van-dropdown-menu>

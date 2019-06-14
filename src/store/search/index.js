@@ -22,7 +22,7 @@ export default {
     getSearchList ({ commit }, payload) {
       // console.log(payload)
       // console.log(newVal)
-      axios.get('/api/ajax/search',
+      axios.get('http://localhost:8080/ajax/search',
       {
        params: {
         kw: payload.newVal,

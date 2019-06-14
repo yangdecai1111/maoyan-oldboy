@@ -49,6 +49,8 @@ export default new Router({
       path: '/sousuo',
       name: 'sousuo',
       component: () => import('./views/Sousuo')
+    },
+    {
       path: '/cinemaDetail/:id',
       name: 'cinemaDetail',
       component: () => import('./views/Detail/cinemaDetail.vue')
