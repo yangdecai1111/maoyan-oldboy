@@ -36,6 +36,19 @@ export default new Router({
       component: () => import('./views/Center')
     },
     {
+      path: '/search',
+      name: 'search',
+      component: () => import('./views/Search'),
+    },
+    {
+      path: '/place/:id',
+      name: 'place',
+      component: () => import('./views/Place')
+    },
+    {
+      path: '/sousuo',
+      name: 'sousuo',
+      component: () => import('./views/Sousuo')
       path: '/cinemaDetail/:id',
       name: 'cinemaDetail',
       component: () => import('./views/Detail/cinemaDetail.vue')
@@ -44,6 +57,8 @@ export default new Router({
       path: '/test/:id',
       name: 'test',
       component: () => import('./views/Index/test.vue')
+
     }
+    
   ]
 })
