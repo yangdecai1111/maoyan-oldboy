@@ -10,18 +10,18 @@
       <van-tabs v-model="tabAct">
         <van-tab title="美团账号登录">
           <!-- 登录表单 -->
-            <van-cell-group>
-              <van-field v-model="value" placeholder="账户名/手机号/Email" />
-              <van-field v-model="value" placeholder="请输入您的密码" />
-            </van-cell-group>
+            <!-- <van-cell-group> -->
+              <van-field placeholder="账户名/手机号/Email" />
+              <van-field placeholder="请输入您的密码" />
+            <!-- </van-cell-group> -->
         </van-tab>
         <van-tab title="手机验证登录">
           <!-- 登录表单 -->
           <div class="login-form">
-            <van-cell-group>
-              <van-field v-model="value" placeholder="请输入手机号" />
-              <van-field v-model="value" placeholder="请输入短信验证码" />
-            </van-cell-group>
+            <!-- <van-cell-group> -->
+              <van-field placeholder="请输入手机号" />
+              <van-field placeholder="请输入短信验证码" />
+            <!-- </van-cell-group> -->
           </div>
           <van-button disabled type="primary" size="small">获取验证码</van-button>
 

@@ -10,7 +10,7 @@ export default {
     district: [],
     subway: [],
     cityName: '深圳',
-    latestCity: ['北', '上', '广'],
+    latestCity: ['北京', '上海', '广州'],
     codeList: 30,
     cinemaDetail: {},
     piclist: []

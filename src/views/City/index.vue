@@ -43,7 +43,7 @@
                 :key="i"
                 class="red"
                 >
-                <p id="distance">{{province}}</p>
+                <p class="distance">{{province}}</p>
                 <ul class="pro-inner">
                     <li
                         v-for="(city,j) in cityList[i]"
@@ -103,15 +103,16 @@ export default {
       // this.latestCity[0] = el.innerText;
     },
     seek (event) {
-      var el = event.currentTarget.innerHTML
-      console.log(el)
-
-      // document.getElementById('scrollBody').scrollTop = 800+'px';
-      // for(var i=0;i<provinceList.length;i++){
-      //     if()
-      // }
-      // var dis = document.getElementById('distance');
-      console.log(document.getElementById('scrollBody').scrollTop)
+      var el = event.currentTarget.innerText;
+        console.log(el);
+        for(var i=0;i<this.provinceList.length;i++){
+          if(this.provinceList[i] == el){
+            // console.log(this.provinceList[i]);
+            document.documentElement.scrollTop=document.getElementsByClassName('distance')[i].offsetTop; 
+          } 
+        }
+        // document.documentElement.scrollTop=document.getElementsByClassName('distance')[0].offsetTop; 
+        // 北京:320   定位最近热门:200 设置滚动距离
     }
   },
   watch: {
