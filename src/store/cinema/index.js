@@ -12,11 +12,14 @@ export default {
     cityName: '深圳',
     latestCity: ['北京', '上海', '广州'],
     codeList: 30,
-    cinemaDetail: {}
+    cinemaDetail: {},
+    curSelectMovieId: undefined,
+    curDateIndex: 0 // 当前选择当前时间的下标
+    // curSelectDay
   },
   getters: {
     changecinemaDetail (state) {
-      let data = state.cinemaDetail.showData.movies ? state.cinemaDetail.showData.movies : []
+      let data = state.cinemaDetail.showData ? state.cinemaDetail.showData.movies : []
       let newdata = data.map(function (item) {
         return {
           ...item,
@@ -24,9 +27,23 @@ export default {
         }
       })
       return newdata
+    },
+    curSelectMovieAndPlist (state, getters) {
+      let result = []
+      if (state.curSelectMovieId) {
+        let obj = getters.changecinemaDetail.find(item => item.id === state.curSelectMovieId)
+        result = obj.shows[state.curDateIndex] ? obj.shows[state.curDateIndex].plist : []
+      }
+      return result
     }
   },
   mutations: {
+    CHGSELECTMOVIEID (state, id) {
+      state.curSelectMovieId = id
+    },
+    CHGDATEINDEX (state, index) {
+      state.curDateIndex = index
+    },
     SETCITYLIST (state, list) {
       state.cityList = list
     },
