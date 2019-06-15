@@ -38,7 +38,7 @@ export default new Router({
     {
       path: '/search',
       name: 'search',
-      component: () => import('./views/Search'),
+      component: () => import('./views/Search')
     },
     {
       path: '/place/:id',
@@ -54,13 +54,6 @@ export default new Router({
       path: '/cinemaDetail/:id',
       name: 'cinemaDetail',
       component: () => import('./views/Detail/cinemaDetail.vue')
-    },
-    {
-      path: '/test/:id',
-      name: 'test',
-      component: () => import('./views/Index/test.vue')
-
     }
-    
   ]
 })

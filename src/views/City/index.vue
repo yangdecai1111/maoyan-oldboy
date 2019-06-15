@@ -103,16 +103,16 @@ export default {
       // this.latestCity[0] = el.innerText;
     },
     seek (event) {
-      var el = event.currentTarget.innerText;
-        console.log(el);
-        for(var i=0;i<this.provinceList.length;i++){
-          if(this.provinceList[i] == el){
-            // console.log(this.provinceList[i]);
-            document.documentElement.scrollTop=document.getElementsByClassName('distance')[i].offsetTop; 
-          } 
+      var el = event.currentTarget.innerText
+      console.log(el)
+      for (var i = 0; i < this.provinceList.length; i++) {
+        if (this.provinceList[i] === el) {
+          // console.log(this.provinceList[i]);
+          document.documentElement.scrollTop = document.getElementsByClassName('distance')[i].offsetTop
         }
-        // document.documentElement.scrollTop=document.getElementsByClassName('distance')[0].offsetTop; 
-        // 北京:320   定位最近热门:200 设置滚动距离
+      }
+      // document.documentElement.scrollTop=document.getElementsByClassName('distance')[0].offsetTop;
+      // 北京:320   定位最近热门:200 设置滚动距离
     }
   },
   watch: {
@@ -121,43 +121,22 @@ export default {
   },
   created () {
     axios.get('http://localhost:8080/api/LocList.json')
-          .then(response=>{
-            // console.log(response.data.CountryRegion.State);// Array数组,共33个省份
-            var provinceData = response.data.CountryRegion.State;
-            for(var i=0;i<provinceData.length;i++){
-                // var cityData = provinceData[i].City;
-                this.provinceList.push(provinceData[i].Name);// provinceData[i]表示第i个省的对象,包含该省城市信息
-                // console.log(provinceData[i].Name);
-                this.cityList[i] = new Array();
-                for(var j=0;j<provinceData[i].City.length;j++){
-                  this.cityList[i][j]=provinceData[i].City[j].Name;
-                  // console.log(provinceData[i].City[j].Name)
-                }
-            }
-            // console.log(provinceData[2].City[1].Name)// provinceData[i].City为第i个城市的对象数组
-
-          });
-  },
-  beforeMount: function () {
-    // this.$toast('提示文案');
-    if(this.a){
-        // Toast.allowMultiple();
-        const toast1 = this.$toast({
-           message:"自动定位失败",
-           type:"fail",
-           duration:1500
-        });
-    }
-  },
-  mounted(){
-    // if(this.a){
-    //     // Toast.allowMultiple();
-    //     const toast1 = this.$toast({
-    //        message:"自动定位中",
-    //        type:"loading"
-    //     });
-    // }
-  },
+      .then(response => {
+        // console.log(response.data.CountryRegion.State);// Array数组,共33个省份
+        var provinceData = response.data.CountryRegion.State
+        for (var i = 0; i < provinceData.length; i++) {
+          // var cityData = provinceData[i].City;
+          this.provinceList.push(provinceData[i].Name)// provinceData[i]表示第i个省的对象,包含该省城市信息
+          // console.log(provinceData[i].Name);
+          this.cityList[i] = []
+          for (var j = 0; j < provinceData[i].City.length; j++) {
+            this.cityList[i][j] = provinceData[i].City[j].Name
+            // console.log(provinceData[i].City[j].Name)
+          }
+        }
+        // console.log(provinceData[2].City[1].Name)// provinceData[i].City为第i个城市的对象数组
+      })
+  }
 }
 </script>
 

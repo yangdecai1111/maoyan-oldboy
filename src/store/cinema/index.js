@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Toast } from 'vant'
 export default {
   namespaced: true,
   state: {
@@ -13,9 +14,50 @@ export default {
     latestCity: ['北京', '上海', '广州'],
     codeList: 30,
     cinemaDetail: {},
-    piclist: []
+    curSelectMovieId: undefined,
+    curDateIndex: 0 // 当前选择当前时间的下标
+    // curSelectDay
+  },
+  getters: {
+    changecinemaDetail (state) {
+      let data = state.cinemaDetail.showData ? state.cinemaDetail.showData.movies : []
+      let newdata = data.map(function (item) {
+        return {
+          ...item,
+          img: item.img.replace('w.h', '128.180')
+        }
+      })
+      return newdata
+    },
+    curSelectMovieAndPlist (state, getters) {
+      let result = []
+      if (state.curSelectMovieId) {
+        let obj = getters.changecinemaDetail.find(item => item.id === state.curSelectMovieId)
+        result = obj.shows[state.curDateIndex] ? obj.shows[state.curDateIndex].plist : []
+      }
+      return result
+    },
+    getvipInfo (state) {
+      return state.cinemaDetail.showData ? state.cinemaDetail.showData.vipInfo : []
+    },
+    getDealList (state) {
+      let data = state.cinemaDetail.dealList ? state.cinemaDetail.dealList.dealList : []
+      let newData = data.map(function (item) {
+        return {
+          ...item,
+          imageUrl: item.imageUrl.replace('w.h', '128.180')
+        }
+      })
+      return newData
+    }
   },
   mutations: {
+    CHGSELECTMOVIEID (state, id) {
+      state.curSelectMovieId = id
+    },
+    CHGDATEINDEX (state, index) {
+      state.curDateIndex = index
+    },
     SETCITYLIST (state, list) {
       state.cityList = list
     },
@@ -39,9 +81,6 @@ export default {
     },
     SETCINEMADETAIL (state, list) {
       state.cinemaDetail = list
-    },
-    SETPICLIST (state, list) {
-      state.piclist = list
     }
   },
   actions: {
@@ -50,6 +89,10 @@ export default {
       state
     }, isMore) {
       commit('SETLOADING', true)
+      Toast.loading({
+        duration: 0,
+        message: '加载中...'
+      })
       setTimeout(() => {
         axios.get('http://localhost:8080/ajax/cinemaList', {
           params: {
@@ -70,6 +113,7 @@ export default {
           }
         }).then(response => {
           let res = response.data
+          Toast.clear()
           if (isMore) {
             let newCityList = [...state.cityList, ...res.cinemas]
             commit('SETCITYLIST', newCityList)
@@ -107,25 +151,6 @@ export default {
       }).then(response => {
         let res = response.data
         commit('SETCINEMADETAIL', res)
-      })
-    },
-    getPicList ({ commit }, id) {
-      axios.get('http://localhost:8080/ajax/cinemaDetail', {
-        params: {
-          cinemaId: id,
-          movieId: 246973
-        }
-      }).then(response => {
-        let res = response.data
-        let data = res.showData.movies
-        let newdata = data.map(function (item) {
-          return {
-            ...item,
-            img: item.img.replace('w.h', '128.180')
-          }
-        })
-        commit('SETPICLIST', newdata)
-        console.log(newdata)
       })
     }
   }
