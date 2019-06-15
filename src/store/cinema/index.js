@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Toast } from 'vant'
 export default {
   namespaced: true,
   state: {
@@ -35,6 +36,19 @@ export default {
         result = obj.shows[state.curDateIndex] ? obj.shows[state.curDateIndex].plist : []
       }
       return result
+    },
+    getvipInfo (state) {
+      return state.cinemaDetail.showData ? state.cinemaDetail.showData.vipInfo : []
+    },
+    getDealList (state) {
+      let data = state.cinemaDetail.dealList ? state.cinemaDetail.dealList.dealList : []
+      let newData = data.map(function (item) {
+        return {
+          ...item,
+          imageUrl: item.imageUrl.replace('w.h', '128.180')
+        }
+      })
+      return newData
     }
   },
   mutations: {
@@ -75,6 +89,10 @@ export default {
       state
     }, isMore) {
       commit('SETLOADING', true)
+      Toast.loading({
+        duration: 0,
+        message: '加载中...'
+      })
       setTimeout(() => {
         axios.get('http://localhost:8080/ajax/cinemaList', {
           params: {
@@ -95,6 +113,7 @@ export default {
           }
         }).then(response => {
           let res = response.data
+          Toast.clear()
           if (isMore) {
             let newCityList = [...state.cityList, ...res.cinemas]
             commit('SETCITYLIST', newCityList)

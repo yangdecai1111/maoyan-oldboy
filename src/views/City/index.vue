@@ -106,7 +106,7 @@ export default {
       var el = event.currentTarget.innerText
       console.log(el)
       for (var i = 0; i < this.provinceList.length; i++) {
-        if (this.provinceList[i] == el) {
+        if (this.provinceList[i] === el) {
           // console.log(this.provinceList[i]);
           document.documentElement.scrollTop = document.getElementsByClassName('distance')[i].offsetTop
         }
@@ -128,7 +128,7 @@ export default {
           // var cityData = provinceData[i].City;
           this.provinceList.push(provinceData[i].Name)// provinceData[i]表示第i个省的对象,包含该省城市信息
           // console.log(provinceData[i].Name);
-          this.cityList[i] = new Array()
+          this.cityList[i] = []
           for (var j = 0; j < provinceData[i].City.length; j++) {
             this.cityList[i][j] = provinceData[i].City[j].Name
             // console.log(provinceData[i].City[j].Name)
@@ -136,26 +136,6 @@ export default {
         }
         // console.log(provinceData[2].City[1].Name)// provinceData[i].City为第i个城市的对象数组
       })
-  },
-  beforeMount: function () {
-    // this.$toast('提示文案');
-    if (this.a) {
-      // Toast.allowMultiple();
-      const toast1 = this.$toast({
-        message: '自动定位失败',
-        type: 'fail',
-        duration: 1500
-      })
-    }
-  },
-  mounted () {
-    // if(this.a){
-    //     // Toast.allowMultiple();
-    //     const toast1 = this.$toast({
-    //        message:"自动定位中",
-    //        type:"loading"
-    //     });
-    // }
   }
 }
 </script>

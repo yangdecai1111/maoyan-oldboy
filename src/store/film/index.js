@@ -134,7 +134,6 @@ export default {
       state
     }, isMore) {
       let offsetNum = state.offsetNum
-      let setmostList = state.setmostList
       axios.get('http://localhost:8080/ajax/mostExpected', {
         params: {
           ci: 10,

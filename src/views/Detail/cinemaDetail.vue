@@ -44,13 +44,13 @@
         class="todaylist"
         @click="listDetail(list)"
       >
-        <div class="vip-tops">
-          <div class="label">折扣卡</div>
-          <div class="label-text">购票享低价，首单2张立减4元</div>
-          <div class="process">9.9元开卡 ></div>
+        <div class="vip-tops" v-for="vip in getvipInfo" :key="vip.process">
+          <div class="label">{{vip.tag}}</div>
+          <div class="label-text">{{vip.title}}</div>
+          <div class="process">{{vip.process}} ></div>
         </div>
         <ul>
-          <router-link v-for="pl in curSelectMovieAndPlist" :key="pl.seqNo" class="playlist" tag="li" to="/center">
+          <router-link v-for="pl in curSelectMovieAndPlist" :key="pl.seqNo" class="playlist" tag="li" to="/center" v-show="curSelectMovieAndPlist.length > 0">
             <div class="time-block">
               <div class="begin">{{pl.tm}}</div>
               <div class="end">{{pl.tm}}散场</div>
@@ -78,8 +78,31 @@
             </div>
           </router-link>
         </ul>
+
       </van-tab>
     </van-tabs>
+    <div class="tuan">
+      <div class="gap" style="height: 10px; background-color: #f0f0f0;"></div>
+      <div class="tuan-list">
+        <div class="tuan-title">影院超值套餐</div>
+        <router-link to="/center" tag="div" class="tuan-item" v-for="list in getDealList" :key="list.title">
+          <img :src="list.imageUrl">
+          <span class="hot-tag" v-if="list.cardTag">{{list.cardTag}}</span>
+          <div class="item-info">
+            <div class="title">
+              <span>{{list.recommendPersonNum > 1 ? '双人' : '单人'}}</span>
+              大杯可乐2杯+中桶爆米花1桶
+            </div>
+            <div class="sell-num">{{list.curNumberDesc}}</div>
+            <div class="price">
+              <span style="font-size:14px;">¥</span>
+              <span class="num" style="font-size:17px;">{{list.price}}</span>
+            </div>
+            <div class="buy-btn">去购买</div>
+          </div>
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -96,7 +119,7 @@ export default {
   },
   computed: {
     ...mapState('cinema', ['cinemaDetail']),
-    ...mapGetters('cinema', ['changecinemaDetail', 'curSelectMovieAndPlist']),
+    ...mapGetters('cinema', ['changecinemaDetail', 'curSelectMovieAndPlist', 'getvipInfo', 'getDealList']),
     curDateIndex: {
       get () {
         return this.$store.state.cinema.curDateIndex
@@ -337,6 +360,102 @@ export default {
         border: 0;
       }
     }
+  }
+}
+.tuan-list{
+  position: relative;
+  margin: 0 0 0 15px;
+  & .tuan-title{
+    .border-bottom;
+    line-height: 45px;
+    height: 45px;
+    font-size: 15px;
+    color: #666;
+  }
+  & .tuan-item{
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    padding: 13px 0;
+    overflow: hidden;
+   & img {
+    display: inline-block;
+    width: 92px;
+    height: 92px;
+    float: left;
+   }
+   & .hot-tag{
+    position: absolute;
+    left: 0;
+    top: 13px;
+    display: inline-block;
+    height: 18px;
+    line-height: 18px;
+    background-color: #fa5939;
+    font-size: 12px;
+    padding: 0 5px;
+    color: #fff;
+    border-bottom-right-radius: 2px;
+   }
+   & .item-info{
+    position: relative;
+    margin: 0 15px 0 102px;
+    height: 92px;
+    overflow: hidden;
+    & .title{
+    font-size: 14px;
+    line-height: 18px;
+    color: #333;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    & span{
+      display: inline-block;
+      vertical-align: top;
+      margin-top: 1px;
+      margin-right: 7px;
+      padding: 0 4px;
+      font-size: 10px;
+      line-height: 15px;
+      height: 15px;
+      background: #f90;
+      border-radius: 2px;
+      color: #fff;
+    }
+    }
+    & .sell-num{
+      display: inline-block;
+      position: absolute;
+      bottom: 34px;
+      right: 0;
+      line-height: 16px;
+      height: 16px;
+      font-size: 12px;
+      color: #999;
+    }
+    & .price{
+      color: #f03d37;
+      display: inline-block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+    & .buy-btn{
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      display: inline-block;
+      padding: 0 8px;
+      height: 27px;
+      line-height: 27px;
+      font-size: 12px;
+      border-radius: 3px;
+      color: #fff;
+      background-color: #f03d37;
+    }
+   }
   }
 }
 </style>
