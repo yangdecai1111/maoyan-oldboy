@@ -36,7 +36,7 @@
       </div>
       <div class="moive-desc">{{moivedesc}}</div>
     </div>
-    <van-tabs v-model="curDateIndex" class="ttt">
+    <van-tabs v-model="curDateIndex" >
       <van-tab
         :title="list"
         v-for="list in todayPlay"
@@ -50,7 +50,7 @@
           <div class="process">{{vip.process}} ></div>
         </div>
         <ul>
-          <router-link v-for="pl in curSelectMovieAndPlist" :key="pl.seqNo" class="playlist" tag="li" to="/center" v-show="curSelectMovieAndPlist.length > 0">
+          <router-link v-for="pl in curSelectMovieAndPlist" :key="pl.seqNo" class="playlist" tag="li" to="/center">
             <div class="time-block">
               <div class="begin">{{pl.tm}}</div>
               <div class="end">{{pl.tm}}散场</div>
@@ -78,7 +78,6 @@
             </div>
           </router-link>
         </ul>
-
       </van-tab>
     </van-tabs>
     <div class="tuan">
@@ -91,7 +90,7 @@
           <div class="item-info">
             <div class="title">
               <span>{{list.recommendPersonNum > 1 ? '双人' : '单人'}}</span>
-              大杯可乐2杯+中桶爆米花1桶
+              {{list.title}}
             </div>
             <div class="sell-num">{{list.curNumberDesc}}</div>
             <div class="price">
