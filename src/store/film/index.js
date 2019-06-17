@@ -87,7 +87,7 @@ export default {
       console.log(str)
       if (isLoadMore) {
         console.log(123)
-        axios.get('http://localhost:8080/ajax/moreComingList', {
+        axios.get('/maoyan/ajax/moreComingList', {
           params: {
             token: '',
             movieIds: str
@@ -108,7 +108,7 @@ export default {
           Toast.clear()
         })
       } else {
-        axios.get('http://localhost:8080/ajax/movieOnInfoList', {
+        axios.get('/maoyan/ajax/movieOnInfoList', {
           params: {
             token: ''
           }
@@ -134,7 +134,7 @@ export default {
       state
     }, isMore) {
       let offsetNum = state.offsetNum
-      axios.get('http://localhost:8080/ajax/mostExpected', {
+      axios.get('/maoyan/ajax/mostExpected', {
         params: {
           ci: 10,
           limit: 10,
@@ -176,7 +176,7 @@ export default {
       let str = arr.join(',')
       if (isComing) {
         console.log('jinlaimei')
-        axios.get('http://localhost:8080/ajax/moreComingList', {
+        axios.get('/maoyan/ajax/moreComingList', {
           params: {
             ci: 10,
             token: '',
@@ -200,7 +200,7 @@ export default {
           Toast.clear()
         })
       } else {
-        axios.get('http://localhost:8080/ajax/comingList', {
+        axios.get('/maoyan/ajax/comingList', {
           params: {
             ci: 10,
             token: '',

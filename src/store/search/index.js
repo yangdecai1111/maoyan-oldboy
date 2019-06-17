@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { Toast } from 'vant'
 export default {
   namespaced: true,
   state: {
@@ -22,7 +21,7 @@ export default {
     getSearchList ({ commit }, payload) {
       // console.log(payload)
       // console.log(newVal)
-      axios.get('http://localhost:8080/ajax/search',
+      axios.get('/maoyan/ajax/search',
         {
           params: {
             kw: payload.newVal,
@@ -35,7 +34,7 @@ export default {
         // console.log(response);
         let res = []
         if (payload.inputVal === -1) {
-          res = response.data.movies.list
+          res = response.data.movies ? response.data.movies.list : []
           let resData = res.map(item => {
             return {
               ...item,
@@ -44,13 +43,13 @@ export default {
           })
           commit('SEARCHLIST', resData)
         } else if (payload.inputVal === 2) {
-          res = response.data.cinemas.list
+          res = response.data.cinemas ? response.data.cinemas.list : []
           let newRes = res.map(item => {
           // 结构赋值是把新的hallType给改变
           // hasOwnProperty判断有某个属性,重新改变数据,在判断
             return {
               ...item,
-              hallType: item.hasOwnProperty('hallType') ? (item.hallType.length == 0 ? false : item.hallType) : false
+              hallType: item.hasOwnProperty('hallType') ? (item.hallType.length === 0 ? false : item.hallType) : false
             }
           })
           commit('SEARCHLIST', newRes)

@@ -94,7 +94,7 @@ export default {
         message: '加载中...'
       })
       setTimeout(() => {
-        axios.get('http://localhost:8080/ajax/cinemaList', {
+        axios.get('/maoyan/ajax/cinemaList', {
           params: {
             day: state.day,
             offset: state.offset,
@@ -128,7 +128,7 @@ export default {
     getDistrictList ({
       commit, state
     }) {
-      axios.get('http://localhost:8080/ajax/filterCinemas', {
+      axios.get('/maoyan/ajax/filterCinemas', {
         params: {
           ci: state.codeList
         }
@@ -143,7 +143,7 @@ export default {
       commit('SETCODELIST', res)
     },
     getCinemaDetail ({ commit }, id) {
-      axios.get('http://localhost:8080/ajax/cinemaDetail', {
+      axios.get('/maoyan/ajax/cinemaDetail', {
         params: {
           cinemaId: id,
           movieId: 246973
