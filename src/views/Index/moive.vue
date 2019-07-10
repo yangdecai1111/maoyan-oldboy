@@ -121,7 +121,7 @@ export default {
       let scrollBox = this.$refs['mytabs'].$el.querySelector(
         '.van-tabs__content'
       )
-      let scrollTop = document.documentElement.scrollTop
+      // let scrollTop = document.documentElement.scrollTop
       let scrollHeight = scrollBox.scrollHeight
       let clientHeight = scrollBox.clientHeight
       if (scrollHeight - (clientHeight + scrollBox.scrollTop) <= 0) {

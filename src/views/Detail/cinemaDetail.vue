@@ -49,11 +49,11 @@
           <div class="label-text">{{vip.title}}</div>
           <div class="process">{{vip.process}} ></div>
         </div>
-        <ul>
+        <ul v-if="curSelectMovieAndPlist.length > 0">
           <router-link v-for="pl in curSelectMovieAndPlist" :key="pl.seqNo" class="playlist" tag="li" to="/center">
             <div class="time-block">
               <div class="begin">{{pl.tm}}</div>
-              <div class="end">{{pl.tm}}散场</div>
+              <div class="end">{{ sanchang(pl.tm) }}散场</div>
             </div>
             <div class="info-block">
               <div class="lan">{{pl.lang}}{{pl.tp}}</div>
@@ -78,6 +78,8 @@
             </div>
           </router-link>
         </ul>
+        <div v-else>今天已经没有场次了
+        </div>
       </van-tab>
     </van-tabs>
     <div class="tuan">
@@ -118,7 +120,7 @@ export default {
   },
   computed: {
     ...mapState('cinema', ['cinemaDetail']),
-    ...mapGetters('cinema', ['changecinemaDetail', 'curSelectMovieAndPlist', 'getvipInfo', 'getDealList']),
+    ...mapGetters('cinema', ['changecinemaDetail', 'curSelectMovieAndPlist', 'getvipInfo', 'getDealList', 'curSelectMovie']),
     curDateIndex: {
       get () {
         return this.$store.state.cinema.curDateIndex
@@ -135,6 +137,9 @@ export default {
       }
     }
   },
+  filters: {
+
+  },
   methods: {
     ...mapActions('cinema', ['getCinemaDetail']),
     listItem (item) {
@@ -146,6 +151,23 @@ export default {
       for (let i = 0; i < item.shows.length; i++) {
         this.todayPlay.push(item.shows[i].dateShow)
       }
+    },
+    sanchang (value) {
+      let hours = value.split(':')[0]
+      let min = value.split(':')[1]
+      min = Number(min) + Number(this.curSelectMovie ? this.curSelectMovie.dur : 0)
+      while (min >= 60) {
+        min -= 60
+        if (min < 10) {
+          min = '0' + min
+        }
+        hours = Number(hours) + 1
+        if (hours >= 24) {
+          hours = 0
+          hours = '0' + String(hours)
+        }
+      }
+      return hours + ':' + min
     }
   },
   created () {

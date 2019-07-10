@@ -37,6 +37,13 @@ export default {
       }
       return result
     },
+    curSelectMovie (state, getters) {
+      let result = {}
+      if (state.curSelectMovieId) {
+        result = getters.changecinemaDetail.find(item => item.id === state.curSelectMovieId)
+      }
+      return result
+    },
     getvipInfo (state) {
       return state.cinemaDetail.showData ? state.cinemaDetail.showData.vipInfo : []
     },
@@ -128,6 +135,10 @@ export default {
     getDistrictList ({
       commit, state
     }) {
+      Toast.loading({
+        duration: 0,
+        message: '加载中...'
+      })
       axios.get('/maoyan/ajax/filterCinemas', {
         params: {
           ci: state.codeList
@@ -135,6 +146,7 @@ export default {
       }).then(response => {
         let res = response.data
         commit('SETDISTRICT', res)
+        Toast.clear()
       })
     },
     getCodeList ({
@@ -143,6 +155,10 @@ export default {
       commit('SETCODELIST', res)
     },
     getCinemaDetail ({ commit }, id) {
+      Toast.loading({
+        duration: 0,
+        message: '加载中...'
+      })
       axios.get('/maoyan/ajax/cinemaDetail', {
         params: {
           cinemaId: id,
@@ -151,6 +167,7 @@ export default {
       }).then(response => {
         let res = response.data
         commit('SETCINEMADETAIL', res)
+        Toast.clear()
       })
     }
   }

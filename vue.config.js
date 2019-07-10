@@ -12,6 +12,7 @@ module.exports = {
   //           }
   //       }
   //   }
+  publicPath:'/maoy/',
   devServer: {
     proxy: {
       // key - 请求前缀

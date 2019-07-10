@@ -84,7 +84,7 @@ export default {
       // console.log(el.innerText);
       // 点击城市名选择城市
       var el = event.currentTarget
-      axios.get('http://localhost:8080/api/cityList.json').then(response => {
+      axios.get('/api/cityList.json').then(response => {
         let res = response.data
         for (let i = 0; i < res.length; i++) {
           if (res[i].name === el.innerText) {
@@ -120,7 +120,7 @@ export default {
     }
   },
   created () {
-    axios.get('http://localhost:8080/api/LocList.json')
+    axios.get('/api/LocList.json')
       .then(response => {
         // console.log(response.data.CountryRegion.State);// Array数组,共33个省份
         var provinceData = response.data.CountryRegion.State

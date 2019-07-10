@@ -2,17 +2,16 @@
   <div class="main">
     <h1 class="nav-header">影院</h1>
     <div class="nav-title">
-      <label for="serach">
-         <i class="iconfont icon-fdj"></i>
-      </label>
-
       <div class="l-title">
         <router-link to="/city">
           <span>{{cityName}}</span>
           <i class="iconfont icon-xjt"></i>
         </router-link>
       </div>
-      <div>
+      <div class="serachInfo">
+        <label for="serach">
+         <i class="iconfont icon-fdj"></i>
+        </label>
         <router-link to="/search">
           <input type="text" class="serach" placeholder="搜影院">
         </router-link>
@@ -98,12 +97,15 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
-    & .icon-fdj{
-      position: absolute;
-      left: 186px;
-      bottom: 14px;
-      font-size: 12px;
+    .serachInfo{
+      display: flex;
+      position: relative;
+      .icon-fdj{
+        position: absolute;
+        left: 120px;
+        top:10px;
+        font-size: 12px;
+      }
     }
     & .serach{
       display: block;
